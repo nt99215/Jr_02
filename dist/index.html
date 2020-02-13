@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" style="height: 100%; display: block">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel = "apple-touch-icon" href="jrnaver_192X192.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="./manifest.json">
+    <meta name="viewport" content="minimal-ui, user-scalable=no, initial-scale=1">
+    <title>해저 탐험</title>
+
+    <style >
+        body{
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: block;
+            background-color: #000000;
+            overflow:hidden;
+        }
+
+        #loading {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            background-image: url("./asset/game/image/preLoadingBg.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            color: white;
+            text-align: center;
+            vertical-align:middle;
+        }
+
+    </style>
+</head>
+<body scroll="no">
+<div id="loading"></div>
+<canvas id="glcanvas" width="10" height="10"></canvas>
+
+
+<script>
+let gameScript = document.createElement('script');
+gameScript.setAttribute('src', 'index.bundle.js');
+document.body.appendChild(gameScript);
+</script>
+
+</body>
+</html>

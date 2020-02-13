@@ -1,0 +1,164 @@
+{"frames": {
+
+"celebration_greenM":
+{
+	"frame": {"x":766,"y":360,"w":64,"h":28},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":64,"h":28},
+	"sourceSize": {"w":64,"h":28}
+},
+"celebration_orange_circle":
+{
+	"frame": {"x":990,"y":0,"w":20,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":20,"h":20},
+	"sourceSize": {"w":20,"h":20}
+},
+"celebration_orangeM":
+{
+	"frame": {"x":888,"y":360,"w":44,"h":54},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":44,"h":54},
+	"sourceSize": {"w":44,"h":54}
+},
+"celebration_red_circle":
+{
+	"frame": {"x":990,"y":20,"w":18,"h":20},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":18,"h":20},
+	"sourceSize": {"w":18,"h":20}
+},
+"celebration_redM":
+{
+	"frame": {"x":766,"y":388,"w":52,"h":52},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":52,"h":52},
+	"sourceSize": {"w":52,"h":52}
+},
+"celebration_star":
+{
+	"frame": {"x":830,"y":360,"w":58,"h":55},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":58,"h":55},
+	"sourceSize": {"w":58,"h":55}
+},
+"img_pong_01":
+{
+	"frame": {"x":0,"y":994,"w":355,"h":383},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":3,"y":0,"w":355,"h":383},
+	"sourceSize": {"w":358,"h":383}
+},
+"img_pong_02":
+{
+	"frame": {"x":621,"y":623,"w":357,"h":378},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":5,"w":357,"h":378},
+	"sourceSize": {"w":358,"h":383}
+},
+"img_popup":
+{
+	"frame": {"x":0,"y":0,"w":766,"h":623},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":766,"h":623},
+	"sourceSize": {"w":766,"h":623}
+},
+"img_shark_01":
+{
+	"frame": {"x":355,"y":1001,"w":317,"h":292},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":317,"h":292},
+	"sourceSize": {"w":317,"h":292}
+},
+"img_shark_02":
+{
+	"frame": {"x":672,"y":1001,"w":317,"h":286},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":2,"w":317,"h":286},
+	"sourceSize": {"w":317,"h":292}
+},
+"img_speechbubble_01":
+{
+	"frame": {"x":0,"y":808,"w":588,"h":186},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":16,"y":0,"w":588,"h":186},
+	"sourceSize": {"w":621,"h":186}
+},
+"img_speechbubble_02":
+{
+	"frame": {"x":0,"y":623,"w":621,"h":185},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":0,"y":1,"w":621,"h":185},
+	"sourceSize": {"w":621,"h":186}
+},
+"img_staroff_01":
+{
+	"frame": {"x":766,"y":0,"w":112,"h":121},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":121},
+	"sourceSize": {"w":112,"h":121}
+},
+"img_staroff_02":
+{
+	"frame": {"x":766,"y":242,"w":112,"h":118},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":118},
+	"sourceSize": {"w":112,"h":118}
+},
+"img_staroff_03":
+{
+	"frame": {"x":878,"y":0,"w":112,"h":121},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":121},
+	"sourceSize": {"w":112,"h":121}
+},
+"img_staron_01":
+{
+	"frame": {"x":766,"y":121,"w":112,"h":121},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":121},
+	"sourceSize": {"w":112,"h":121}
+},
+"img_staron_02":
+{
+	"frame": {"x":878,"y":242,"w":112,"h":118},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":118},
+	"sourceSize": {"w":112,"h":118}
+},
+"img_staron_03":
+{
+	"frame": {"x":878,"y":121,"w":112,"h":121},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":112,"h":121},
+	"sourceSize": {"w":112,"h":121}
+}},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "ending-asset",
+	"format": "BGRA8888",
+	"size": {"w":1010,"h":1377},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:3999a7dd34cca4a508070c2a92d2bf74:531c51a39a773efa57f6d8dd59299f2a:3f28210b5dceb91d64151725d9c214d3$"
+}
+}

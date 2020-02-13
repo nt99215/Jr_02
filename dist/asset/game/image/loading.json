@@ -1,0 +1,92 @@
+{"frames": [
+
+{
+	"filename": "cover_pattern",
+	"frame": {"x":608,"y":305,"w":8,"h":8},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":8,"h":8},
+	"sourceSize": {"w":8,"h":8}
+},
+{
+	"filename": "loading_bar",
+	"frame": {"x":572,"y":329,"w":168,"h":56},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":168,"h":56},
+	"sourceSize": {"w":168,"h":56}
+},
+{
+	"filename": "loading_circle",
+	"frame": {"x":608,"y":2,"w":300,"h":300},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":300},
+	"sourceSize": {"w":300,"h":300}
+},
+{
+	"filename": "loading_juni_piyo_01",
+	"frame": {"x":2,"y":329,"w":134,"h":164},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":134,"h":164},
+	"sourceSize": {"w":134,"h":164}
+},
+{
+	"filename": "loading_juni_piyo_02",
+	"frame": {"x":139,"y":329,"w":134,"h":164},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":134,"h":164},
+	"sourceSize": {"w":134,"h":164}
+},
+{
+	"filename": "loading_juni_piyo_03",
+	"frame": {"x":276,"y":329,"w":134,"h":164},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":134,"h":164},
+	"sourceSize": {"w":134,"h":164}
+},
+{
+	"filename": "network_juni",
+	"frame": {"x":2,"y":2,"w":300,"h":324},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":324},
+	"sourceSize": {"w":300,"h":324}
+},
+{
+	"filename": "reloding_btn_off",
+	"frame": {"x":413,"y":329,"w":156,"h":76},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":156,"h":76},
+	"sourceSize": {"w":156,"h":76}
+},
+{
+	"filename": "reloding_btn_on",
+	"frame": {"x":413,"y":408,"w":156,"h":76},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":156,"h":76},
+	"sourceSize": {"w":156,"h":76}
+},
+{
+	"filename": "reloding_juni",
+	"frame": {"x":305,"y":2,"w":300,"h":324},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":300,"h":324},
+	"sourceSize": {"w":300,"h":324}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "loading.png",
+	"format": "RGBA8888",
+	"size": {"w":910,"h":495},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:887b305f76e1c46c21ee1819772d6199:38529e6b365f0cf9b739daae6514ac13:5294b8b30e478db5089d68a09bebcee6$"
+}
+}
