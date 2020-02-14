@@ -7,13 +7,12 @@ import LoadManager from "./loader/manager/LoadManager";
 import ScreenManager from "./loader/manager/ScreenManager";
 
 class index extends Phaser.Game {
-    // constructor(targetElementId, w, h, debug = false, from) {
-    constructor(w, h, debug = false, from) {
+    constructor(targetElementId, w, h, debug = false, from) {
         let cfg = {
             width: w,
             height: h,
             renderer: Phaser.AUTO,
-            // parent: targetElementId,
+            parent: targetElementId,
             multiTexture: true,
             enableDebug: debug
         };
@@ -28,7 +27,7 @@ class index extends Phaser.Game {
         new SoundManager(this);
         new LoadManager(this);
         let sm = new ScreenManager(this);
-        sm.init();
+        // sm.init();
 
 
 
@@ -46,4 +45,4 @@ class index extends Phaser.Game {
 export default index
 window.nts = {};
 // window.nts.index = new index('main_doc', 1280, 720);
-window.nts.index = new index(1280, 720);
+window.nts.index = new index('main_doc', 1280, 720);
