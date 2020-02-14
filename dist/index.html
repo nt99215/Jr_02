@@ -149,7 +149,7 @@
             {
                 // console.log("User allows fullscreen");
 
-                let element = document.body
+                let element = document.body;
                 if("requestFullscreen" in element)
                 {
                     element.requestFullscreen();
@@ -244,7 +244,8 @@
         let my_awesome_script = document.createElement('script');
         my_awesome_script.setAttribute('src','index.bundle.js');
         document.body.appendChild(my_awesome_script);
-        changeWinSize();
+        // changeWinSize();
+       full_screen();
     }else{
         changeWinSize();
         let div = document.getElementById('loading');
