@@ -1249,7 +1249,7 @@ class ScreenManager {
             document.addEventListener("MSFullscreenError", function () {/*console.log("Full screen failed");*/
             });
             window.addEventListener("resize", function (evt) {
-                this.changeWinSize();
+                // this.changeWinSize();
             }, false);
             /* let gameScript = document.createElement('script');
              gameScript.setAttribute('src', 'index.bundle.js');

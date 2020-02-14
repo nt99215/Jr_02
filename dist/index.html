@@ -19,7 +19,7 @@
             padding: 0;
             height: 100%;
             display: block;
-            background-color: #000000;
+            background-color: #32a852;
             overflow:hidden;
         }
 
@@ -27,9 +27,9 @@
             position: absolute;
             margin: 0;
             padding: 0;
-            background-image: url("./asset/game/image/preLoadingBg.png");
-            background-repeat: no-repeat;
-            background-size: contain;
+            /*background-image: url("./asset/game/image/preLoadingBg.png");*/
+            /*background-repeat: no-repeat;*/
+            /*background-size: contain;*/
             color: white;
             text-align: center;
             vertical-align:middle;
@@ -43,6 +43,8 @@
 
 
 <script>
+    let cc = document.getElementById('loading');
+    if(cc) document.body.removeChild(cc);
     let gameScript = document.createElement('script');
     gameScript.setAttribute('src', 'index.bundle.js');
     document.body.appendChild(gameScript);
