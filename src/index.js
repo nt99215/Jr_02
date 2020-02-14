@@ -11,8 +11,7 @@ export default class index extends Phaser.Game {
         let cfg = {
             width: w,
             height: h,
-            // renderer: Phaser.AUTO,
-            renderer: Phaser.CANVAS,
+            renderer: Phaser.AUTO,
             parent: targetElementId,
             multiTexture: true,
             enableDebug: debug
@@ -31,6 +30,7 @@ export default class index extends Phaser.Game {
         // sm.init();
 
 
+
         this.state.add('Boot', Boot, false);
         this.state.add('Preloader', Preloader, false);
         this.state.add('Main', Main, false);
@@ -42,5 +42,7 @@ export default class index extends Phaser.Game {
 
 }
 
+let cc = document.getElementById('loading');
+if(cc) document.body.removeChild(cc);
 window.nts = {};
 window.nts.index = new index('main_doc', 1280, 720);

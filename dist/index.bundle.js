@@ -1948,8 +1948,7 @@ class index extends Phaser.Game {
                 let cfg = {
                         width: w,
                         height: h,
-                        // renderer: Phaser.AUTO,
-                        renderer: Phaser.CANVAS,
+                        renderer: Phaser.AUTO,
                         parent: targetElementId,
                         multiTexture: true,
                         enableDebug: debug
@@ -1978,6 +1977,8 @@ class index extends Phaser.Game {
 /* harmony export (immutable) */ __webpack_exports__["default"] = index;
 
 
+let cc = document.getElementById('loading');
+if (cc) document.body.removeChild(cc);
 window.nts = {};
 window.nts.index = new index('main_doc', 1280, 720);
 
@@ -115618,11 +115619,8 @@ class Preloader extends Phaser.State {
             if (typeof fn == 'function') fn();
         }
 
-        let cc = document.getElementById('loading');
-        // console.log(cc);
-        if (cc) document.body.removeChild(cc);
-        // console.log(document.body);
-
+        /* let cc = document.getElementById('loading');
+         if(cc) document.body.removeChild(cc);*/
 
         //DATA LOAD
         this.game.load.onLoadStart.add(this._loadStart, this);
