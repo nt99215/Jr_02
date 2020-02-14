@@ -44,5 +44,4 @@ class index extends Phaser.Game {
 
 export default index
 window.nts = {};
-// window.nts.index = new index('main_doc', 1280, 720);
 window.nts.index = new index('main_doc', 1280, 720);

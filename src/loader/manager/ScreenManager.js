@@ -6,7 +6,7 @@ export default class ScreenManager {
 
     fullScreen() {
 
-      /*  if("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document)
+        if("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document)
         {
             if(document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled)
             {
@@ -19,22 +19,23 @@ export default class ScreenManager {
                 else if ("mozRequestFullScreen" in element) element.mozRequestFullScreen();
                 else if ("msRequestFullscreen" in element) element.msRequestFullscreen();
             }
+
         }
         else
         {
-            alert("User doesn't allow full screen");
-        }*/
+            // console.log("User doesn't allow full screen");
+        }
     }
 
     isMobile() {
-       /* let filter = "win16|win32|win64|mac|macintel";
+        let filter = "win16|win32|win64|mac|macintel";
         if( navigator.platform  ){
             if( filter.indexOf(navigator.platform.toLowerCase())<0 ){
                 return true;
             }else{
                 return false;
             }
-        }*/
+        }
     }
 
     checkBr(){
@@ -42,7 +43,7 @@ export default class ScreenManager {
          * PC 브라우저 지원 하지 않을 경우
          * IE 8 이하 일 경우
          */
-        /*let canvas = document.getElementById("glcanvas");
+        let canvas = document.getElementById("glcanvas");
         let gl;
         if(this.isMobile()) {
             if(!canvas) return false;
@@ -66,11 +67,11 @@ export default class ScreenManager {
                 }
             }
         }
-        return true;*/
+        return true;
     }
 
     initWebGL(canvas) {
-       /* let gl = null;
+        let gl = null;
         try {
             gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
         }
@@ -79,12 +80,12 @@ export default class ScreenManager {
         if (!gl) {
             gl = null;
         }
-        return gl;*/
+        return gl;
     }
 
     changeWinSize() {
 
-       /* let ww = document.body.clientWidth;
+        let ww = document.body.clientWidth;
         let wh = document.body.clientHeight;
 
         let _loading = document.getElementById('loading');
@@ -118,11 +119,11 @@ export default class ScreenManager {
 
             _loading.style.left = leftGap + 'px';
             _loading.style.top = topGap + 'px';
-        }*/
+        }
     }
 
     screen_change() {
-       /* if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
             // console.log("Current full screen element is : " + (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement))
         } else {
             if ("exitFullscreen" in document) {
@@ -134,30 +135,30 @@ export default class ScreenManager {
             } else if ("msExitFullscreen" in document) {
                 document.msExitFullscreen();
             }
-        }*/
+        }
     }
 
     init() {
-       /* let flag = this.checkBr();
+        let flag = this.checkBr();
         if (flag) {
             document.addEventListener("fullscreenchange", this.screen_change);
             document.addEventListener("webkitfullscreenchange", this.screen_change);
             document.addEventListener("mozfullscreenchange", this.screen_change);
             document.addEventListener("MSFullscreenChange", this.screen_change);
-            document.addEventListener("fullscreenerror", function () {/!*console.log("Full screen failed");*!/
+            document.addEventListener("fullscreenerror", function () {/*console.log("Full screen failed");*/
             });
-            document.addEventListener("webkitfullscreenerror", function () {/!*console.log("Full screen failed");*!/
+            document.addEventListener("webkitfullscreenerror", function () {/*console.log("Full screen failed");*/
             });
-            document.addEventListener("mozfullscreenerror", function () {/!*console.log("Full screen failed");*!/
+            document.addEventListener("mozfullscreenerror", function () {/*console.log("Full screen failed");*/
             });
-            document.addEventListener("MSFullscreenError", function () {/!*console.log("Full screen failed");*!/
+            document.addEventListener("MSFullscreenError", function () {/*console.log("Full screen failed");*/
             });
             window.addEventListener("resize", function (evt) {
                 // this.changeWinSize();
             }, false);
-           /!* let gameScript = document.createElement('script');
+           /* let gameScript = document.createElement('script');
             gameScript.setAttribute('src', 'index.bundle.js');
-            document.body.appendChild(gameScript);*!/
+            document.body.appendChild(gameScript);*/
             this.changeWinSize();
         } else {
             this.changeWinSize();
@@ -166,7 +167,7 @@ export default class ScreenManager {
             div.innerHTML += '<div class="inner">' +
                 '<p>해당 컨텐츠를 지원 하지 않는 브라우저 입니다. </p>' +
                 '</div>';
-        }*/
+        }
     }
 
 
