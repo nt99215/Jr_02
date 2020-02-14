@@ -106,12 +106,10 @@
 
         let ww = document.body.clientWidth;
         let wh = document.body.clientHeight;
-
-        alert(ww)
         // let ww = window.innerWidth;
         // let wh = window.innerHeight;
 
-        let _loading = document.getElementById('loading');
+     /*   let _loading = document.getElementById('loading');
 
         let cw = 1280;
         let ch = 720;
@@ -140,9 +138,7 @@
             _loading.style.left = leftGap + 'px';
             _loading.style.top = topGap + 'px';
 
-            alert(_loading.style.width)
-            alert( _loading.style.top )
-        }
+        }*/
     }
 
     function full_screen()
@@ -185,25 +181,29 @@
     {
         if(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)
         {
-            // console.log("Current full screen element is : " + (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement))
+            console.log("Current full screen element is : " + (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement))
         }
         else
         {
             if ("exitFullscreen" in document)
             {
+                alert('exitFullscreen');
                 document.exitFullscreen();
             }
             else if ("webkitExitFullscreen" in document)
             {
                 document.webkitExitFullscreen();
+                alert('webkitExitFullscreen');
             }
             else if ("mozCancelFullScreen" in document)
             {
                 document.mozCancelFullScreen();
+                alert('mozCancelFullScreen');
             }
             else if ("msExitFullscreen" in document)
             {
                 document.msExitFullscreen();
+                alert('msExitFullscreen');
             }
         }
         // console.log("screen_change");
@@ -230,33 +230,28 @@
 
     let flag = checkBr();
     if(flag) {
-   /*     document.addEventListener("fullscreenchange", screen_change);
+        document.addEventListener("fullscreenchange", screen_change);
         document.addEventListener("webkitfullscreenchange", screen_change);
         document.addEventListener("mozfullscreenchange", screen_change);
         document.addEventListener("MSFullscreenChange", screen_change);
-        document.addEventListener("fullscreenerror", function(){/!*console.log("Full screen failed");*!/});
-        document.addEventListener("webkitfullscreenerror", function(){/!*console.log("Full screen failed");*!/});
-        document.addEventListener("mozfullscreenerror", function(){/!*console.log("Full screen failed");*!/});
-        document.addEventListener("MSFullscreenError", function(){/!*console.log("Full screen failed");*!/});
+        document.addEventListener("fullscreenerror", function(){/*console.log("Full screen failed");*/});
+        document.addEventListener("webkitfullscreenerror", function(){/*console.log("Full screen failed");*/});
+        document.addEventListener("mozfullscreenerror", function(){/*console.log("Full screen failed");*/});
+        document.addEventListener("MSFullscreenError", function(){/*console.log("Full screen failed");*/});
         window.addEventListener("resize", function(evt) {
             changeWinSize();
-        }, false);*/
-        let url_string = location.href;
+        }, false);
         let my_awesome_script = document.createElement('script');
-        //my_awesome_script.setAttribute('src','./jr.con.write.abc.min.js?v1.1.0');
         my_awesome_script.setAttribute('src','index.bundle.js');
         document.body.appendChild(my_awesome_script);
         changeWinSize();
-        alert("AA")
     }else{
-        alert("BB")
-
-        // changeWinSize();
-    /*    let div = document.getElementById('loading');
+        changeWinSize();
+        let div = document.getElementById('loading');
         div.style.backgroundImage = "url('')";
         div.innerHTML += '<div class="inner">'+
             '<p>해당 컨텐츠를 지원 하지 않는 브라우저 입니다. </p>'+
-            '</div>';*/
+            '</div>';
     }
 </script>
 
