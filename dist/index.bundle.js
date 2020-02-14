@@ -1108,7 +1108,8 @@ class ScreenManager {
             if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
                 // console.log("User allows fullscreen");
 
-                let element = document.body;
+                // let element = document.body;
+                let element = document.getElementById('loading');
                 if ("requestFullscreen" in element) {
                     element.requestFullscreen();
                 } else if ("webkitRequestFullscreen" in element) {
@@ -1964,7 +1965,7 @@ class index extends Phaser.Game {
                 new __WEBPACK_IMPORTED_MODULE_4__manager_SoundManager__["a" /* default */](this);
                 new __WEBPACK_IMPORTED_MODULE_5__loader_manager_LoadManager__["a" /* default */](this);
                 let sm = new __WEBPACK_IMPORTED_MODULE_6__loader_manager_ScreenManager__["a" /* default */](this);
-                sm.fullScreen();
+                sm.init();
 
                 this.state.add('Boot', __WEBPACK_IMPORTED_MODULE_0__loader_state_Boot__["a" /* default */], false);
                 this.state.add('Preloader', __WEBPACK_IMPORTED_MODULE_1__loader_state_Preloader__["a" /* default */], false);

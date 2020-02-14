@@ -12,7 +12,8 @@ export default class ScreenManager {
             {
                 // console.log("User allows fullscreen");
 
-                let element = document.body;
+                // let element = document.body;
+                let element = document.getElementById('loading');
                 if("requestFullscreen" in element)
                 {
                     element.requestFullscreen();
