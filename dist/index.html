@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko" style="height: 100%; display: block">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0,maximum-scale=1.0, user-scalable=no, viewport-fit=cover" >
+    <meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0,maximum-scale=1.0, user-scalable=no" >
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel = "apple-touch-icon" href="jrnaver_192X192.png">
     <meta name="full-screen" content="yes" />
@@ -19,20 +19,20 @@
             padding: 0;
             height: 100%;
             display: block;
-            background-color: #ffcc00;
+            background-color: #ff00cc;
             overflow:hidden;
         }
 
         #loading {
-            position: absolute;
-            margin: 0;
-            padding: 0;
+            /*position: absolute;*/
+            /*margin: 0;*/
+            /*padding: 0;*/
             /*background-image: url("./asset/game/image/preLoadingBg.png");*/
             /*background-repeat: no-repeat;*/
             /*background-size: contain;*/
-            color: white;
-            text-align: center;
-            vertical-align:top;
+            /*color: white;*/
+            /*text-align: center;*/
+            /*vertical-align:top;*/
         }
 
     </style>
@@ -226,30 +226,33 @@
 
     let flag = checkBr();
     if(flag) {
-        document.addEventListener("fullscreenchange", screen_change);
+   /*     document.addEventListener("fullscreenchange", screen_change);
         document.addEventListener("webkitfullscreenchange", screen_change);
         document.addEventListener("mozfullscreenchange", screen_change);
         document.addEventListener("MSFullscreenChange", screen_change);
-        document.addEventListener("fullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("webkitfullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("mozfullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("MSFullscreenError", function(){/*console.log("Full screen failed");*/});
+        document.addEventListener("fullscreenerror", function(){/!*console.log("Full screen failed");*!/});
+        document.addEventListener("webkitfullscreenerror", function(){/!*console.log("Full screen failed");*!/});
+        document.addEventListener("mozfullscreenerror", function(){/!*console.log("Full screen failed");*!/});
+        document.addEventListener("MSFullscreenError", function(){/!*console.log("Full screen failed");*!/});
         window.addEventListener("resize", function(evt) {
             changeWinSize();
-        }, false);
+        }, false);*/
         let url_string = location.href;
         let my_awesome_script = document.createElement('script');
         //my_awesome_script.setAttribute('src','./jr.con.write.abc.min.js?v1.1.0');
         my_awesome_script.setAttribute('src','index.bundle.js');
         document.body.appendChild(my_awesome_script);
         changeWinSize();
+        alert("AA")
     }else{
-        changeWinSize();
-        let div = document.getElementById('loading');
+        alert("BB")
+
+        // changeWinSize();
+    /*    let div = document.getElementById('loading');
         div.style.backgroundImage = "url('')";
         div.innerHTML += '<div class="inner">'+
             '<p>해당 컨텐츠를 지원 하지 않는 브라우저 입니다. </p>'+
-            '</div>';
+            '</div>';*/
     }
 </script>
 
