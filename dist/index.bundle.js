@@ -1935,12 +1935,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 class index extends Phaser.Game {
-        constructor(targetElementId, w, h, debug = false, from) {
+        // constructor(targetElementId, w, h, debug = false, from) {
+        constructor(w, h, debug = false, from) {
                 let cfg = {
                         width: w,
                         height: h,
                         renderer: Phaser.AUTO,
-                        parent: targetElementId,
+                        // parent: targetElementId,
                         multiTexture: true,
                         enableDebug: debug
                 };
@@ -1964,12 +1965,11 @@ class index extends Phaser.Game {
         }
 
 }
-/* harmony export (immutable) */ __webpack_exports__["default"] = index;
 
-
+/* harmony default export */ __webpack_exports__["default"] = (index);
 window.nts = {};
 // window.nts.index = new index('main_doc', 1280, 720);
-window.nts.index = new index('glcanvas', 1280, 720);
+window.nts.index = new index(1280, 720);
 
 /***/ }),
 /* 18 */

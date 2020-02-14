@@ -6,13 +6,14 @@ import SoundManager from "./manager/SoundManager";
 import LoadManager from "./loader/manager/LoadManager";
 import ScreenManager from "./loader/manager/ScreenManager";
 
-export default class index extends Phaser.Game {
-    constructor(targetElementId, w, h, debug = false, from) {
+class index extends Phaser.Game {
+    // constructor(targetElementId, w, h, debug = false, from) {
+    constructor(w, h, debug = false, from) {
         let cfg = {
             width: w,
             height: h,
             renderer: Phaser.AUTO,
-            parent: targetElementId,
+            // parent: targetElementId,
             multiTexture: true,
             enableDebug: debug
         };
@@ -42,6 +43,7 @@ export default class index extends Phaser.Game {
 
 }
 
+export default index
 window.nts = {};
 // window.nts.index = new index('main_doc', 1280, 720);
-window.nts.index = new index('glcanvas', 1280, 720);
+window.nts.index = new index(1280, 720);
