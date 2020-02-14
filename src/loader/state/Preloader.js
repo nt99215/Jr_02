@@ -63,7 +63,9 @@ export default class Preloader extends Phaser.State {
 
 
         let cc = document.getElementById('loading');
+        // console.log(cc);
         if(cc) document.body.removeChild(cc);
+        // console.log(document.body);
 
 
         //DATA LOAD

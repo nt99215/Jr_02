@@ -1948,7 +1948,8 @@ class index extends Phaser.Game {
                 let cfg = {
                         width: w,
                         height: h,
-                        renderer: Phaser.AUTO,
+                        // renderer: Phaser.AUTO,
+                        renderer: Phaser.CANVAS,
                         parent: targetElementId,
                         multiTexture: true,
                         enableDebug: debug
@@ -115618,7 +115619,10 @@ class Preloader extends Phaser.State {
         }
 
         let cc = document.getElementById('loading');
+        // console.log(cc);
         if (cc) document.body.removeChild(cc);
+        // console.log(document.body);
+
 
         //DATA LOAD
         this.game.load.onLoadStart.add(this._loadStart, this);
