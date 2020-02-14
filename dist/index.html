@@ -27,12 +27,12 @@
             position: absolute;
             margin: 0;
             padding: 0;
-            background-image: url("./asset/game/image/preLoadingBg.png");
-            background-repeat: no-repeat;
-            background-size: contain;
+            /*background-image: url("./asset/game/image/preLoadingBg.png");*/
+            /*background-repeat: no-repeat;*/
+            /*background-size: contain;*/
             color: white;
             text-align: center;
-            vertical-align:middle;
+            vertical-align:top;
         }
 
     </style>
@@ -226,14 +226,14 @@
 
     let flag = checkBr();
     if(flag) {
-        document.addEventListener("fullscreenchange", screen_change);
-        document.addEventListener("webkitfullscreenchange", screen_change);
-        document.addEventListener("mozfullscreenchange", screen_change);
-        document.addEventListener("MSFullscreenChange", screen_change);
-        document.addEventListener("fullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("webkitfullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("mozfullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("MSFullscreenError", function(){/*console.log("Full screen failed");*/});
+        // document.addEventListener("fullscreenchange", screen_change);
+        // document.addEventListener("webkitfullscreenchange", screen_change);
+        // document.addEventListener("mozfullscreenchange", screen_change);
+        // document.addEventListener("MSFullscreenChange", screen_change);
+        // document.addEventListener("fullscreenerror", function(){/*console.log("Full screen failed");*/});
+        // document.addEventListener("webkitfullscreenerror", function(){/*console.log("Full screen failed");*/});
+        // document.addEventListener("mozfullscreenerror", function(){/*console.log("Full screen failed");*/});
+        // document.addEventListener("MSFullscreenError", function(){/*console.log("Full screen failed");*/});
         window.addEventListener("resize", function(evt) {
             changeWinSize();
         }, false);
