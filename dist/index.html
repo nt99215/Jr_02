@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, minimal-ui, initial-scale=1.0,maximum-scale=1.0, user-scalable=no, viewport-fit=cover" >
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel = "apple-touch-icon" href="jrnaver_192X192.png">
+    <meta name="full-screen" content="yes" />
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="./manifest.json">
-    <meta name="viewport" content="minimal-ui, user-scalable=no, initial-scale=1">
     <meta property="og:title" content="해저 탐험">
     <meta property="og:image" content="jrnaver_192X192.png">
     <title>해저 탐험</title>
@@ -102,11 +103,11 @@
 
     function changeWinSize() {
 
-        // let ww = document.body.clientWidth;
-        // let wh = document.body.clientHeight;
+        let ww = document.body.clientWidth;
+        let wh = document.body.clientHeight;
 
-        let ww = window.innerWidth;
-        let wh = window.innerHeight;
+        // let ww = window.innerWidth;
+        // let wh = window.innerHeight;
 
         let _loading = document.getElementById('loading');
 
