@@ -27,7 +27,7 @@ export default class index extends Phaser.Game {
         new SoundManager(this);
         new LoadManager(this);
         let sm = new ScreenManager(this);
-        sm.init();
+        // sm.init();
 
 
         this.state.add('Boot', Boot, false);
