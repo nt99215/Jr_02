@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" style="height: 100%; display: block">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -17,16 +17,16 @@
 
     <style >
         body{
-            margin: 0;
+           /* margin: 0;
             padding: 0;
             height: 100%;
             display: block;
             background-color: #a032a8;
-            overflow:hidden;
+            overflow:hidden;*/
         }
 
         #loading {
-            position: absolute;
+            /*position: absolute;*/
             margin: 0;
             padding: 0;
             /*background-image: url("./asset/game/image/preLoadingBg.png");*/
@@ -45,8 +45,8 @@
 
 
 <script>
-    let cc = document.getElementById('loading');
-    if(cc) document.body.removeChild(cc);
+    // let cc = document.getElementById('loading');
+    // if(cc) document.body.removeChild(cc);
     let gameScript = document.createElement('script');
     gameScript.setAttribute('src', 'index.bundle.js');
     document.body.appendChild(gameScript);
