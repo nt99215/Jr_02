@@ -1964,8 +1964,7 @@ class index extends Phaser.Game {
                 new __WEBPACK_IMPORTED_MODULE_4__manager_SoundManager__["a" /* default */](this);
                 new __WEBPACK_IMPORTED_MODULE_5__loader_manager_LoadManager__["a" /* default */](this);
                 let sm = new __WEBPACK_IMPORTED_MODULE_6__loader_manager_ScreenManager__["a" /* default */](this);
-                // sm.init();
-
+                sm.fullScreen();
 
                 this.state.add('Boot', __WEBPACK_IMPORTED_MODULE_0__loader_state_Boot__["a" /* default */], false);
                 this.state.add('Preloader', __WEBPACK_IMPORTED_MODULE_1__loader_state_Preloader__["a" /* default */], false);
@@ -1977,8 +1976,6 @@ class index extends Phaser.Game {
 /* harmony export (immutable) */ __webpack_exports__["default"] = index;
 
 
-// let cc = document.getElementById('loading');
-// if(cc) document.body.removeChild(cc);
 window.nts = {};
 window.nts.index = new index('main_doc', 1280, 720);
 

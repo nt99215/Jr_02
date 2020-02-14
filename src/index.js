@@ -27,7 +27,7 @@ export default class index extends Phaser.Game {
         new SoundManager(this);
         new LoadManager(this);
         let sm = new ScreenManager(this);
-        // sm.init();
+        sm.fullScreen();
 
 
 
@@ -42,7 +42,5 @@ export default class index extends Phaser.Game {
 
 }
 
-// let cc = document.getElementById('loading');
-// if(cc) document.body.removeChild(cc);
 window.nts = {};
 window.nts.index = new index('main_doc', 1280, 720);
