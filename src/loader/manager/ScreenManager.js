@@ -152,42 +152,7 @@ export default class ScreenManager {
             document.addEventListener("MSFullscreenError", function () {/*console.log("Full screen failed");*/
             });
             window.addEventListener("resize", function (evt) {
-                // this.changeWinSize();
-                let ww = document.body.clientWidth;
-                let wh = document.body.clientHeight;
-
-                let _loading = document.getElementById('loading');
-
-                let cw = 1280;
-                let ch = 720;
-
-                let scaleX = ww / cw;
-                let scaleY = wh / ch;
-
-
-                let scale;
-                if (scaleX > scaleY)
-                {
-                    scale = scaleY
-                }
-                else
-                {
-                    scale = scaleX
-                }
-
-                if(_loading) {
-                    let ah = Math.round(ch * scale);
-                    let aw = Math.round(cw * scale);
-
-                    _loading.style.width = aw + 'px';
-                    _loading.style.height = ah + 'px';
-
-                    let leftGap = Math.round((ww - aw) / 2);
-                    let topGap = Math.round((wh - ah) / 2);
-
-                    _loading.style.left = leftGap + 'px';
-                    _loading.style.top = topGap + 'px';
-                }
+                this.changeWinSize();
             }, false);
            /* let gameScript = document.createElement('script');
             gameScript.setAttribute('src', 'index.bundle.js');
