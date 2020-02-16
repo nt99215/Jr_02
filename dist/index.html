@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel = "apple-touch-icon" href="jrnaver_192X192.png">
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="manifest" href="./manifest.json">
     <meta name="viewport" content="minimal-ui, user-scalable=no, initial-scale=1">
-    <title>쥬니버 ABC 따라쓰기</title>
+    <meta property="og:title" content="해저 탐험">
+    <meta property="og:image" content="jrnaver_192X192.png">
+    <title>해저 탐험</title>
 
     <style >
         body{
@@ -17,7 +18,7 @@
             padding: 0;
             height: 100%;
             display: block;
-            background-color: #cf2652;
+            background-color: #000000;
             overflow:hidden;
         }
 
@@ -31,237 +32,19 @@
             color: white;
             text-align: center;
             vertical-align:middle;
-            font-size: 200%;
         }
-
-        .inner {
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 15%;
-        }
-
 
     </style>
 </head>
 <body scroll="no">
+<div id="loading"></div>
+<canvas id="glcanvas" width="10" height="10"></canvas>
 
-<input type="hidden" id="predata" value="./assets/data/preloadList.json"/>
-<input type="hidden" id="loadingBackImg" value="./assets/img/loading_bg.png"/>
-
-
-<div id="loading">
-</div>
-
-<canvas id="glcanvas" width="10" height="10">
-</canvas>
 
 <script>
-
-    function checkBr(){
-        /**
-         * PC 브라우저 지원 하지 않을 경우
-         * IE 8 이하 일 경우
-         */
-        var canvas = document.getElementById("glcanvas");
-        if(isMobile()) {
-            if(!canvas) return false;
-            gl = initWebGL(canvas);      // Initialize the GL context
-            document.body.removeChild(canvas);
-
-            if (gl) {
-                return true;
-            }else{
-                return false;
-            }
-        }else{
-            if(!canvas) return false;
-            document.body.removeChild(canvas);
-            if(navigator.appName.toLocaleLowerCase() == "microsoft internet explorer") {
-                if(navigator.userAgent.indexOf("MSIE 10.0") == -1) {
-                    if(navigator.userAgent.indexOf("MSIE 9.0") == -1) {
-                        // console.log("지원 X");
-                        return false
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    function isMobile() {
-        var filter = "win16|win32|win64|mac|macintel";
-        if( navigator.platform  ){
-            if( filter.indexOf(navigator.platform.toLowerCase())<0 ){
-                return true;
-            }else{
-                return false;
-            }
-        }
-    }
-
-
-    function initWebGL(canvas) {
-        gl = null;
-        try {
-            gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-        }
-        catch(e) {}
-        // If we don't have a GL context, give up now
-        if (!gl) {
-            gl = null;
-        }
-        return gl;
-    }
-
-
-    function changeWinSize() {
-
-        var ww = document.body.clientWidth;
-        var wh = document.body.clientHeight;
-
-        var _loading = document.getElementById('loading');
-
-        var cw = 1280;
-        var ch = 720;
-
-        var scaleX = ww / cw;
-        var scaleY = wh / ch;
-
-
-        var scale;
-        if (scaleX > scaleY) {
-            scale = scaleY
-        } else {
-            scale = scaleX
-        }
-
-        if(_loading) {
-            ah = Math.round(ch * scale);
-            aw = Math.round(cw * scale);
-
-            _loading.style.width = aw + 'px';
-            _loading.style.height = ah + 'px';
-
-            var leftGap = Math.round((ww - aw) / 2);
-            var topGap = Math.round((wh - ah) / 2);
-
-            _loading.style.left = leftGap + 'px';
-            _loading.style.top = topGap + 'px';
-        }
-    }
-
-    function full_screen()
-    {
-        if("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document)
-        {
-            if(document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled)
-            {
-                // console.log("User allows fullscreen");
-
-                var element = document.body
-                if("requestFullscreen" in element)
-                {
-                    element.requestFullscreen();
-                }
-                else if ("webkitRequestFullscreen" in element)
-                {
-                    element.webkitRequestFullscreen();
-                }
-                else if ("mozRequestFullScreen" in element)
-                {
-                    element.mozRequestFullScreen();
-                }
-                else if ("msRequestFullscreen" in element)
-                {
-                    element.msRequestFullscreen();
-                }
-            }
-
-            // console.log("full_screen")
-        }
-        else
-        {
-            // console.log("User doesn't allow full screen");
-        }
-    }
-
-
-    function screen_change()
-    {
-        if(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement)
-        {
-            // console.log("Current full screen element is : " + (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement))
-        }
-        else
-        {
-            if ("exitFullscreen" in document)
-            {
-                document.exitFullscreen();
-            }
-            else if ("webkitExitFullscreen" in document)
-            {
-                document.webkitExitFullscreen();
-            }
-            else if ("mozCancelFullScreen" in document)
-            {
-                document.mozCancelFullScreen();
-            }
-            else if ("msExitFullscreen" in document)
-            {
-                document.msExitFullscreen();
-            }
-        }
-        // console.log("screen_change");
-    }
-
-
-    function searchParams(url, par){
-        var temp = url.split("?");
-        if(temp.length > 1){
-            var cc = temp[1];
-            temp = cc.split("&");
-            for(var i = 0 ; i<temp.length ; i++){
-                cc = temp[i].split("=");
-                if(cc[0] == par){
-                    return cc[1];
-                }
-            }
-            return 0;
-        }else{
-            return 0;
-        }
-    }
-
-
-    var flag = checkBr();
-    if(flag) {
-        document.addEventListener("fullscreenchange", screen_change);
-        document.addEventListener("webkitfullscreenchange", screen_change);
-        document.addEventListener("mozfullscreenchange", screen_change);
-        document.addEventListener("MSFullscreenChange", screen_change);
-        document.addEventListener("fullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("webkitfullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("mozfullscreenerror", function(){/*console.log("Full screen failed");*/});
-        document.addEventListener("MSFullscreenError", function(){/*console.log("Full screen failed");*/});
-        window.addEventListener("resize", function(evt) {
-            changeWinSize();
-        }, false);
-        var url_string = location.href;
-        var my_awesome_script = document.createElement('script');
-        //my_awesome_script.setAttribute('src','./jr.con.write.abc.min.js?v1.1.0');
-        my_awesome_script.setAttribute('src','index.bundle.js');
-        document.body.appendChild(my_awesome_script);
-        changeWinSize();
-    }else{
-        changeWinSize();
-        var div = document.getElementById('loading');
-        div.style.backgroundImage = "url('')";
-        div.innerHTML += '<div class="inner">'+
-            '<p>해당 컨텐츠를 지원 하지 않는 브라우저 입니다. </p>'+
-            '</div>';
-    }
+    let gameScript = document.createElement('script');
+    gameScript.setAttribute('src', 'index.bundle.js');
+    document.body.appendChild(gameScript);
 </script>
 
 </body>
