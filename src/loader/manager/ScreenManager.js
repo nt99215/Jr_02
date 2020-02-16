@@ -10,10 +10,8 @@ export default class ScreenManager {
         {
             if(document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled)
             {
-                alert('fullScreen');
                 // console.log("User allows fullscreen");
                 let element = document.body;
-                // let element = document.getElementById('loading');
                 if("requestFullscreen" in element) element.requestFullscreen();
                 else if ("webkitRequestFullscreen" in element)  element.webkitRequestFullscreen();
                 else if ("mozRequestFullScreen" in element) element.mozRequestFullScreen();
