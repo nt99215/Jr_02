@@ -1995,6 +1995,12 @@ window.nts.index = new index('main_doc', 1280, 720);
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__ = __webpack_require__(1);
+
+
+
 
 
 window.PIXI = __webpack_require__(19);
@@ -2022,6 +2028,15 @@ class Boot extends Phaser.State {
     preload() {
         this.game.load.image(__WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__["a" /* default */].BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
         // this.game.load.atlasJSONHash(ResourceKey.PRELOAD_RESOURCE, './asset/game/image/loading.png', './asset/game/image/loading.json')
+        this.game.focusLoss = () => {
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, true);
+            console.log('focusLoss');
+        };
+        this.game.focusGain = () => {
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            console.log('focusGain');
+        };
     }
 
     create() {
@@ -117100,7 +117115,6 @@ class ObjectManager extends Phaser.Group {
     }
 
     _init() {
-
         /**
          * BG FRONT
          * @type {Phaser.Image | Phaser.Loader | * | never}
@@ -117197,9 +117211,16 @@ class ObjectManager extends Phaser.Group {
         }
     }
 
+    _aaa() {
+        console.log('aaa');
+    }
+    _bbb() {
+        console.log('bbb');
+    }
+
     _update() {
 
-        if (!this._focusCheck()) return;
+        // if(! this._focusCheck()) return;
 
         this._game.physics.arcade.overlap(this.pong.circle, this._enemyGroup.children, this._collisionHandler, null, this);
         this._game.physics.arcade.overlap(this.pong, this._allyGroup.children, this._collisionHandler, null, this);
