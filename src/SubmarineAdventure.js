@@ -107,17 +107,18 @@ export default class SubmarineAdventure extends Phaser.Sprite{
 
     _focusCheck() {
 
-
+        // if(GameConfig.FOCUS_ENABLED) return true;
         if(document.hasFocus())
         {
-            if(GameConfig.FOCUS_ENABLED) return true;
             SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+            // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
             GameConfig.FOCUS_ENABLED = true;
             return true;
         }
         else
         {
             SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
             GameConfig.FOCUS_ENABLED = false;
             return false;
         }
