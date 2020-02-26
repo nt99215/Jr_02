@@ -37,6 +37,7 @@ export default class ObjectManager extends Phaser.Group{
         this._enemyGroup = this._game.add.physicsGroup();
         this._allyGroup.enableBody = true;
         this._enemyGroup.enableBody = true;
+        this._focus = true;
 
         repeat = GameConfig.OCEAN_LENGTH;
         distance = 0;
@@ -52,6 +53,33 @@ export default class ObjectManager extends Phaser.Group{
         this._createNavigator();
         this._init();
 
+        window.addEventListener('focus', function () {
+            // if(this.pong) this.pong.visible = false;
+            // this._focus = true;
+            // console.log(this)
+            // this._aaa();
+
+
+        });
+        window.addEventListener('blur', function () {
+            // if(this.pong) this.pong.visible = false;
+            // this._focus = false;
+            // this._bbb();
+
+
+        });
+
+
+    }
+
+    _aaa(){
+        this._focus = true;
+        console.log("i'm back", this._focus)
+    }
+
+    _bbb(){
+        this._focus = false;
+        console.log("i'm lost", this._focus)
     }
 
     _createNavigator() {
@@ -181,6 +209,8 @@ export default class ObjectManager extends Phaser.Group{
 
 
     }
+
+
 
     _update() {
 

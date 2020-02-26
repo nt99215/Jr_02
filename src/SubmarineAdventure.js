@@ -84,9 +84,12 @@ export default class SubmarineAdventure extends Phaser.Sprite{
             SoundManager.instance.play(SoundAssetKey.MAIN_BGM, true);
     }
 
+
     update() {
 
-        if(! GameConfig.IN_GAME || GameConfig.POP_ENABLED) return;
+        if(! this._focusCheck()) return;
+
+        if(! GameConfig.IN_GAME || GameConfig.POP_ENABLED || ! GameConfig.FOCUS_ENABLED) return;
 
         if(this._objectManager)
         {
@@ -100,6 +103,25 @@ export default class SubmarineAdventure extends Phaser.Sprite{
             ConfigManager.prototype.GAME_OVER();
             this._gameOver();
         }
+    }
+
+    _focusCheck() {
+
+
+        if(document.hasFocus())
+        {
+            if(GameConfig.FOCUS_ENABLED) return true;
+            SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+            GameConfig.FOCUS_ENABLED = true;
+            return true;
+        }
+        else
+        {
+            SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            GameConfig.FOCUS_ENABLED = false;
+            return false;
+        }
+
     }
 
     _gameOver() {

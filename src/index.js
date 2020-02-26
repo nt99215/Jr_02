@@ -11,7 +11,7 @@ class index extends Phaser.Game {
         let cfg = {
             width: w,
             height: h,
-            renderer: Phaser.AUTO,
+            renderer: Phaser.CANVAS,
             parent: targetElementId,
             multiTexture: true,
             enableDebug: debug

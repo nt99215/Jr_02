@@ -49,6 +49,7 @@ export default class PongPong extends Phaser.Sprite{
         circleTween.onComplete.add( () => {
             if(! infoSnd)
             {
+                GameConfig.CURRENT_GUIDE_SOUND = SoundAssetKey.INFO_SND;
                 SoundManager.instance.effectSound(SoundAssetKey.INFO_SND, 0.8);
                 infoSnd = true;
             }

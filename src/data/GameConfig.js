@@ -5,6 +5,7 @@ let device;
 let scene = '';
 let reset;
 let soundEnabled = true;
+let focusEnabled = true;
 let bgmEnabled = true;
 let mainController;
 let tutorialDisabled = false;
@@ -34,6 +35,7 @@ let fishAssetArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 let sharkSpeedArr = [4500, 3000];
 let gameScore = 3;
 let endingInterval = 5;  // milliSecond
+let currentGuideSound = null;
 let helpBtn = null;
 let draggableArea = 1152;
 const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
@@ -59,6 +61,9 @@ export default class GameConfig {
 
     static get SOUND_ENABLED() {return soundEnabled; }
     static set SOUND_ENABLED(bool) {soundEnabled = bool; }
+
+    static get FOCUS_ENABLED() {return focusEnabled; }
+    static set FOCUS_ENABLED(bool) {focusEnabled = bool; }
 
     static get BGM_ENABLED() {return bgmEnabled; }
     static set BGM_ENABLED(bool) {bgmEnabled = bool; }
@@ -103,6 +108,9 @@ export default class GameConfig {
 
     static get GAME_SCORE() { return gameScore; }
     static set GAME_SCORE(num) { gameScore = num; }
+
+    static get CURRENT_GUIDE_SOUND() { return currentGuideSound; }
+    static set CURRENT_GUIDE_SOUND(obj) { currentGuideSound = obj; }
 
     static get HELP_BUTTON() { return helpBtn; }
     static set HELP_BUTTON(obj) { helpBtn = obj; }

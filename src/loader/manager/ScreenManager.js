@@ -6,6 +6,7 @@ export default class ScreenManager {
 
     fullScreen() {
 
+        // console.log('fullScreen')
         if("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document)
         {
             if(document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled)
@@ -152,7 +153,7 @@ export default class ScreenManager {
             document.addEventListener("MSFullscreenError", function () {/*console.log("Full screen failed");*/
             });
             window.addEventListener("resize", function (evt) {
-                this.changeWinSize();
+                // this.changeWinSize();
             }, false);
            /* let gameScript = document.createElement('script');
             gameScript.setAttribute('src', 'index.bundle.js');

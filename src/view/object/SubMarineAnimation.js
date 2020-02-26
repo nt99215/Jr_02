@@ -2,6 +2,7 @@ import SoundManager from "../../manager/SoundManager";
 import SoundAssetKey from "../../data/SoundAssetKey";
 import AssetKey from "../../data/AssetKey";
 import SeparateAnimation from "./SeparateAnimation";
+import GameConfig from "../../data/GameConfig";
 
 let thisAssetKey;
 let thisAssetName;
@@ -40,11 +41,13 @@ export default class SubMarineAnimation extends Phaser.Sprite{
     _subMarineMovement(obj) {
 
         SoundManager.instance.allSoundPause();
+        GameConfig.CURRENT_GUIDE_SOUND = SoundAssetKey.EFFECT_CLEAR;
         SoundManager.instance.effectSound(SoundAssetKey.EFFECT_CLEAR);
         let tween = this._game.add.tween(obj).to({x:550, y:170}, 2000, Phaser.Easing.Linear.Out, true, 0, 0, false);
         tween.onComplete.add(effectSndHandler, this);
 
         function effectSndHandler() {
+            GameConfig.CURRENT_GUIDE_SOUND = SoundAssetKey.CLEAR_SND;
             SoundManager.instance.effectSound(SoundAssetKey.CLEAR_SND);
 
         }

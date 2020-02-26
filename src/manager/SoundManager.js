@@ -16,6 +16,7 @@ export default class SoundManager{
 
         if(GameConfig.INTRO_SND_PLAY)
         {
+            GameConfig.CURRENT_GUIDE_SOUND = SoundAssetKey.GAME_INTRO;
             this.effectSound(SoundAssetKey.GAME_INTRO, 0.8);
             GameConfig.INTRO_SND_PLAY = false;
             setTimeout(this.bgmStart, 2500, this);
@@ -46,7 +47,7 @@ export default class SoundManager{
 
     effectSound(key, volume = 0.8) {
 
-        // console.log(this._game.cache.checkSoundKey(key));
+        // if(this._queue[key] === undefined) return;
         if(! GameConfig.SOUND_ENABLED) return;
 
         if (this._queue[key])
@@ -72,12 +73,9 @@ export default class SoundManager{
     effectSoundStop(key) {
 
         if(SoundManager.instance._queue[key])
-        {
-
-            if(SoundManager.instance._queue[key].snd.isPlaying)
-            {
-                SoundManager.instance._queue[key].snd.stop();
-            }
+        if (SoundManager.instance._queue[key].snd.isPlaying) {
+            if (SoundManager.instance._queue[key].snd.volume === 0) SoundManager.instance._queue[key].snd.volume = 0.8;
+            else SoundManager.instance._queue[key].snd.volume = 0;
         }
     }
 
@@ -100,6 +98,8 @@ export default class SoundManager{
 
     bgmResume(key) {
 
+        if(this._queue[key] === undefined) return;
+        if(this._queue[key].snd.isPlaying || ! GameConfig.SOUND_ENABLED  || ! GameConfig.BGM_ENABLED) return;
         if(GameConfig.BGM_ENABLED && GameConfig.SOUND_ENABLED)
         {
 

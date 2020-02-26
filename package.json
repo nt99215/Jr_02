@@ -38,10 +38,9 @@
         "url": ""
     },
     "directories": {
-        "doc": "doc",
-        "test": "test"
+        "doc": "doc"
     },
     "keywords": [
-        "JuniverLoader"
+        "JuniverGame"
     ]
 }

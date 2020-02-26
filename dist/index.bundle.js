@@ -317,6 +317,247 @@ class AssetKey {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+let currentScene = null;
+let introSnd = true;
+let pause = true;
+let device;
+let scene = '';
+let reset;
+let soundEnabled = true;
+let focusEnabled = true;
+let bgmEnabled = true;
+let mainController;
+let tutorialDisabled = false;
+let pop = false;
+let finish = false;
+let oceanLength = 5; //map length
+let mapSpeed = 4;
+let mapSpeedUp = 7;
+let movingSpeed = 100;
+let objectScale = 0.85;
+let mapMove = false;
+let shakeEnabled = true; //camera shake
+// let primaryCoral = 15;
+// let primaryShark = 15;
+// let primaryJellyFish = 10;
+// let primaryFish = 15;
+
+let primaryCoral = 30;
+let primaryShark = 20;
+let primaryJellyFish = 15;
+let primaryFish = 30;
+
+let primaryOxy = 99;
+let coralAssetArr = [0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2];
+let sharkAssetArr = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1];
+let fishAssetArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2];
+let sharkSpeedArr = [4500, 3000];
+let gameScore = 3;
+let endingInterval = 5; // milliSecond
+let currentGuideSound = null;
+let helpBtn = null;
+let draggableArea = 1152;
+const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
+const appEnabledString = 'app';
+const webEnabledString = 'web';
+
+class GameConfig {
+
+    static get INTRO_SND_PLAY() {
+        return introSnd;
+    }
+    static set INTRO_SND_PLAY(bool) {
+        introSnd = bool;
+    }
+    static get CURRENT_SCENE() {
+        return currentScene;
+    }
+    static set CURRENT_SCENE(obj) {
+        currentScene = obj;
+    }
+    static get GAME_RESET() {
+        return reset;
+    }
+    static set GAME_RESET(bool) {
+        reset = bool;
+    }
+    static get SCENE_STATE() {
+        return scene;
+    }
+    static set SCENE_STATE(str) {
+        scene = str;
+    }
+
+    static get IN_GAME() {
+        return pause;
+    }
+    static set IN_GAME(bool) {
+        return pause = bool;
+    }
+
+    static get MAP_MOVING() {
+        return mapMove;
+    }
+    static set MAP_MOVING(bool) {
+        return mapMove = bool;
+    }
+
+    static get SOUND_ENABLED() {
+        return soundEnabled;
+    }
+    static set SOUND_ENABLED(bool) {
+        soundEnabled = bool;
+    }
+
+    static get FOCUS_ENABLED() {
+        return focusEnabled;
+    }
+    static set FOCUS_ENABLED(bool) {
+        focusEnabled = bool;
+    }
+
+    static get BGM_ENABLED() {
+        return bgmEnabled;
+    }
+    static set BGM_ENABLED(bool) {
+        bgmEnabled = bool;
+    }
+
+    static get DRAGGABLE_AREA() {
+        return draggableArea;
+    }
+
+    static get CURRENT_DEVICE() {
+        return device;
+    }
+    static set CURRENT_DEVICE(str) {
+        device = str;
+    }
+
+    static get MAIN_CONTROLLER() {
+        return mainController;
+    }
+    static set MAIN_CONTROLLER(obj) {
+        mainController = obj;
+    }
+
+    static get TUTORIAL_DISABLED() {
+        return tutorialDisabled;
+    }
+    static set TUTORIAL_DISABLED(bool) {
+        tutorialDisabled = bool;
+    }
+
+    static get POP_ENABLED() {
+        return pop;
+    }
+    static set POP_ENABLED(bool) {
+        pop = bool;
+    }
+
+    static get GAME_FINISH() {
+        return finish;
+    }
+    static set GAME_FINISH(bool) {
+        finish = bool;
+    }
+
+    static get OCEAN_LENGTH() {
+        return oceanLength;
+    }
+    static get MOVING_SPEED() {
+        return movingSpeed;
+    }
+    static get MAP_SPEED() {
+        return mapSpeed;
+    }
+    static get MAP_SPEED_UP() {
+        return mapSpeedUp;
+    }
+
+    static get SHAKE_ENABLED() {
+        return shakeEnabled;
+    }
+    static set SHAKE_ENABLED(bool) {
+        shakeEnabled = bool;
+    }
+
+    static get MAX_CORAL() {
+        return primaryCoral;
+    }
+    static get MAX_SHARK() {
+        return primaryShark;
+    }
+    static get MAX_JELLY_FISH() {
+        return primaryJellyFish;
+    }
+    static get MAX_FISH() {
+        return primaryFish;
+    }
+    static get MAX_OXY() {
+        return primaryOxy;
+    }
+    static get CORAL_ASSET_ARRAY() {
+        return coralAssetArr;
+    }
+    static get SHARK_ASSET_ARRAY() {
+        return sharkAssetArr;
+    }
+    static get SHARK_SPEED_ARRAY() {
+        return sharkSpeedArr;
+    }
+
+    static get OBJECT_SCALE() {
+        return objectScale;
+    }
+
+    static get FISH_ASSET_ARRAY() {
+        return fishAssetArr;
+    }
+
+    static get GAME_SCORE() {
+        return gameScore;
+    }
+    static set GAME_SCORE(num) {
+        gameScore = num;
+    }
+
+    static get CURRENT_GUIDE_SOUND() {
+        return currentGuideSound;
+    }
+    static set CURRENT_GUIDE_SOUND(obj) {
+        currentGuideSound = obj;
+    }
+
+    static get HELP_BUTTON() {
+        return helpBtn;
+    }
+    static set HELP_BUTTON(obj) {
+        helpBtn = obj;
+    }
+
+    static get ENDING_INTERVAL() {
+        return endingInterval;
+    }
+    static get APP_URL() {
+        return appUrl;
+    }
+    static get CHECK_APP_STRING() {
+        return appEnabledString;
+    }
+    static get CHECK_WEB_STRING() {
+        return webEnabledString;
+    }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = GameConfig;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 class SoundAssetKey {
 
     /**
@@ -445,237 +686,12 @@ class SoundAssetKey {
 
 
 /***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-let currentScene = null;
-let introSnd = true;
-let pause = true;
-let device;
-let scene = '';
-let reset;
-let soundEnabled = true;
-let bgmEnabled = true;
-let mainController;
-let tutorialDisabled = false;
-let pop = false;
-let finish = false;
-let oceanLength = 5; //map length
-let mapSpeed = 4;
-let mapSpeedUp = 7;
-let movingSpeed = 100;
-let objectScale = 0.85;
-let mapMove = false;
-let shakeEnabled = true; //camera shake
-// let primaryCoral = 15;
-// let primaryShark = 15;
-// let primaryJellyFish = 10;
-// let primaryFish = 15;
-
-let primaryCoral = 30;
-let primaryShark = 20;
-let primaryJellyFish = 15;
-let primaryFish = 30;
-
-let primaryOxy = 99;
-let coralAssetArr = [0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2];
-let sharkAssetArr = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1];
-let fishAssetArr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2];
-let sharkSpeedArr = [4500, 3000];
-let gameScore = 3;
-let endingInterval = 5; // milliSecond
-let helpBtn = null;
-let draggableArea = 1152;
-const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
-const appEnabledString = 'app';
-const webEnabledString = 'web';
-
-class GameConfig {
-
-    static get INTRO_SND_PLAY() {
-        return introSnd;
-    }
-    static set INTRO_SND_PLAY(bool) {
-        introSnd = bool;
-    }
-    static get CURRENT_SCENE() {
-        return currentScene;
-    }
-    static set CURRENT_SCENE(obj) {
-        currentScene = obj;
-    }
-    static get GAME_RESET() {
-        return reset;
-    }
-    static set GAME_RESET(bool) {
-        reset = bool;
-    }
-    static get SCENE_STATE() {
-        return scene;
-    }
-    static set SCENE_STATE(str) {
-        scene = str;
-    }
-
-    static get IN_GAME() {
-        return pause;
-    }
-    static set IN_GAME(bool) {
-        return pause = bool;
-    }
-
-    static get MAP_MOVING() {
-        return mapMove;
-    }
-    static set MAP_MOVING(bool) {
-        return mapMove = bool;
-    }
-
-    static get SOUND_ENABLED() {
-        return soundEnabled;
-    }
-    static set SOUND_ENABLED(bool) {
-        soundEnabled = bool;
-    }
-
-    static get BGM_ENABLED() {
-        return bgmEnabled;
-    }
-    static set BGM_ENABLED(bool) {
-        bgmEnabled = bool;
-    }
-
-    static get DRAGGABLE_AREA() {
-        return draggableArea;
-    }
-
-    static get CURRENT_DEVICE() {
-        return device;
-    }
-    static set CURRENT_DEVICE(str) {
-        device = str;
-    }
-
-    static get MAIN_CONTROLLER() {
-        return mainController;
-    }
-    static set MAIN_CONTROLLER(obj) {
-        mainController = obj;
-    }
-
-    static get TUTORIAL_DISABLED() {
-        return tutorialDisabled;
-    }
-    static set TUTORIAL_DISABLED(bool) {
-        tutorialDisabled = bool;
-    }
-
-    static get POP_ENABLED() {
-        return pop;
-    }
-    static set POP_ENABLED(bool) {
-        pop = bool;
-    }
-
-    static get GAME_FINISH() {
-        return finish;
-    }
-    static set GAME_FINISH(bool) {
-        finish = bool;
-    }
-
-    static get OCEAN_LENGTH() {
-        return oceanLength;
-    }
-    static get MOVING_SPEED() {
-        return movingSpeed;
-    }
-    static get MAP_SPEED() {
-        return mapSpeed;
-    }
-    static get MAP_SPEED_UP() {
-        return mapSpeedUp;
-    }
-
-    static get SHAKE_ENABLED() {
-        return shakeEnabled;
-    }
-    static set SHAKE_ENABLED(bool) {
-        shakeEnabled = bool;
-    }
-
-    static get MAX_CORAL() {
-        return primaryCoral;
-    }
-    static get MAX_SHARK() {
-        return primaryShark;
-    }
-    static get MAX_JELLY_FISH() {
-        return primaryJellyFish;
-    }
-    static get MAX_FISH() {
-        return primaryFish;
-    }
-    static get MAX_OXY() {
-        return primaryOxy;
-    }
-    static get CORAL_ASSET_ARRAY() {
-        return coralAssetArr;
-    }
-    static get SHARK_ASSET_ARRAY() {
-        return sharkAssetArr;
-    }
-    static get SHARK_SPEED_ARRAY() {
-        return sharkSpeedArr;
-    }
-
-    static get OBJECT_SCALE() {
-        return objectScale;
-    }
-
-    static get FISH_ASSET_ARRAY() {
-        return fishAssetArr;
-    }
-
-    static get GAME_SCORE() {
-        return gameScore;
-    }
-    static set GAME_SCORE(num) {
-        gameScore = num;
-    }
-
-    static get HELP_BUTTON() {
-        return helpBtn;
-    }
-    static set HELP_BUTTON(obj) {
-        helpBtn = obj;
-    }
-
-    static get ENDING_INTERVAL() {
-        return endingInterval;
-    }
-    static get APP_URL() {
-        return appUrl;
-    }
-    static get CHECK_APP_STRING() {
-        return appEnabledString;
-    }
-    static get CHECK_WEB_STRING() {
-        return webEnabledString;
-    }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = GameConfig;
-
-
-/***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(2);
 /**
  * Created by naver on 2017. 9. 13..
  */
@@ -693,6 +709,7 @@ class SoundManager {
     intro() {
 
         if (__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].INTRO_SND_PLAY) {
+            __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND = __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].GAME_INTRO;
             this.effectSound(__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].GAME_INTRO, 0.8);
             __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].INTRO_SND_PLAY = false;
             setTimeout(this.bgmStart, 2500, this);
@@ -714,7 +731,7 @@ class SoundManager {
 
     effectSound(key, volume = 0.8) {
 
-        // console.log(this._game.cache.checkSoundKey(key));
+        // if(this._queue[key] === undefined) return;
         if (!__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED) return;
 
         if (this._queue[key]) {
@@ -734,11 +751,8 @@ class SoundManager {
 
     effectSoundStop(key) {
 
-        if (SoundManager.instance._queue[key]) {
-
-            if (SoundManager.instance._queue[key].snd.isPlaying) {
-                SoundManager.instance._queue[key].snd.stop();
-            }
+        if (SoundManager.instance._queue[key]) if (SoundManager.instance._queue[key].snd.isPlaying) {
+            if (SoundManager.instance._queue[key].snd.volume === 0) SoundManager.instance._queue[key].snd.volume = 0.8;else SoundManager.instance._queue[key].snd.volume = 0;
         }
     }
 
@@ -756,6 +770,8 @@ class SoundManager {
 
     bgmResume(key) {
 
+        if (this._queue[key] === undefined) return;
+        if (this._queue[key].snd.isPlaying || !__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED || !__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].BGM_ENABLED) return;
         if (__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].BGM_ENABLED && __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED) {
 
             if (this._queue[key]) {
@@ -861,7 +877,7 @@ SoundManager.instance = null;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_AssetKey__ = __webpack_require__(0);
 
 
@@ -1104,6 +1120,7 @@ class ScreenManager {
 
     fullScreen() {
 
+        // console.log('fullScreen')
         if ("fullscreenEnabled" in document || "webkitFullscreenEnabled" in document || "mozFullScreenEnabled" in document || "msFullscreenEnabled" in document) {
             if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
                 // console.log("User allows fullscreen");
@@ -1237,7 +1254,7 @@ class ScreenManager {
             document.addEventListener("MSFullscreenError", function () {/*console.log("Full screen failed");*/
             });
             window.addEventListener("resize", function (evt) {
-                this.changeWinSize();
+                // this.changeWinSize();
             }, false);
             /* let gameScript = document.createElement('script');
              gameScript.setAttribute('src', 'index.bundle.js');
@@ -1341,10 +1358,10 @@ class GameInfo {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_AssetKey__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__manager_SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__object_SeparateAnimation__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loader_manager_ScreenManager__ = __webpack_require__(7);
 
@@ -1498,9 +1515,9 @@ class Intro {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__manager_SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_BackgroundEffect_js__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__manager_ConfigManager__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__object_SeparateAnimation__ = __webpack_require__(4);
@@ -1678,7 +1695,7 @@ class ResultView extends Phaser.Group {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(1);
 
 
 class WebEnabledCheck {
@@ -1707,8 +1724,8 @@ class WebEnabledCheck {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
 
 
 
@@ -1765,7 +1782,7 @@ class SceneManager {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__ = __webpack_require__(1);
 
 
 class ConfigManager {
@@ -1937,7 +1954,7 @@ class index extends Phaser.Game {
                 let cfg = {
                         width: w,
                         height: h,
-                        renderer: Phaser.AUTO,
+                        renderer: Phaser.CANVAS,
                         parent: targetElementId,
                         multiTexture: true,
                         enableDebug: debug
@@ -1987,6 +2004,7 @@ class Boot extends Phaser.State {
         this.game.scale.pageAlignVertically = true;
         this.game.scale.pageAlignHorizontally = true;
         this.game.input.maxPointers = 1;
+        this.game.stage.disableVisibilityChange = true;
 
         this.game.scale.refresh();
 
@@ -115543,7 +115561,7 @@ process.umask = function() { return 0; };
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_PreloadData__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__view_Intro__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__view_ResultView__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__data_GameConfig__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__manager_ScreenManager__ = __webpack_require__(7);
 
 
@@ -115665,8 +115683,8 @@ class Preloader extends Phaser.State {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
 
 
 
@@ -116035,9 +116053,9 @@ class Main extends Phaser.State {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_SceneManager__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_AssetKey__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ui_Controller__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__view_Intro__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__view_BgView__ = __webpack_require__(35);
@@ -116126,7 +116144,9 @@ class SubmarineAdventure extends Phaser.Sprite {
 
     update() {
 
-        if (!__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].IN_GAME || __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].POP_ENABLED) return;
+        if (!this._focusCheck()) return;
+
+        if (!__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].IN_GAME || __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].POP_ENABLED || !__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED) return;
 
         if (this._objectManager) {
             let elapsed = this._game.time.elapsedMS / (500 / this._game.time.desiredFps);
@@ -116137,6 +116157,20 @@ class SubmarineAdventure extends Phaser.Sprite {
         if (__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].GAME_FINISH) {
             __WEBPACK_IMPORTED_MODULE_12__manager_ConfigManager__["a" /* default */].prototype.GAME_OVER();
             this._gameOver();
+        }
+    }
+
+    _focusCheck() {
+
+        if (document.hasFocus()) {
+            if (__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED) return true;
+            __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED = true;
+            return true;
+        } else {
+            __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED = false;
+            return false;
         }
     }
 
@@ -116165,9 +116199,9 @@ class SubmarineAdventure extends Phaser.Sprite {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__view_TutorialView__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_GameConfig__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__manager_SceneManager__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__util_WebEnabledCheck__ = __webpack_require__(12);
 
@@ -116257,16 +116291,13 @@ class Controller extends Phaser.Group {
 
         if (this.soundOnBtn.visible) {
             __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
-            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].GAME_INTRO);
-            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].INFO_SND);
-            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].EFFECT_CLEAR);
-            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].CLEAR_SND);
-            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].EFFECT_OXY_1);
-            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].EFFECT_OXY);
+            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND);
             // this._game.sound.stopAll();
             __WEBPACK_IMPORTED_MODULE_2__data_GameConfig__["a" /* default */].SOUND_ENABLED = false;
         }
         if (this.soundOffBtn.visible) {
+            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND);
             __WEBPACK_IMPORTED_MODULE_2__data_GameConfig__["a" /* default */].SOUND_ENABLED = true;
             __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
         }
@@ -116309,8 +116340,8 @@ class Controller extends Phaser.Group {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tutorial_TutorialChapter_1__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__tutorial_TutorialChapter_2__ = __webpack_require__(31);
@@ -116954,9 +116985,9 @@ class TutorialChapter_5 extends Phaser.Group {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_MouseEffect__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_GameConfig__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__ = __webpack_require__(2);
 
 
 
@@ -116991,7 +117022,7 @@ class BgView {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__view_object_PongPong__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__view_object_Coral__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__util_ShuffleRandom__ = __webpack_require__(39);
@@ -117000,7 +117031,7 @@ class BgView {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__view_object_OceanNavigator__ = __webpack_require__(42);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__view_object_Fish__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__view_object_SubMarineAnimation__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__manager_SoundManager__ = __webpack_require__(3);
 
 
@@ -117040,6 +117071,7 @@ class ObjectManager extends Phaser.Group {
         this._enemyGroup = this._game.add.physicsGroup();
         this._allyGroup.enableBody = true;
         this._enemyGroup.enableBody = true;
+        this._focus = true;
 
         repeat = __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].OCEAN_LENGTH;
         distance = 0;
@@ -117054,6 +117086,32 @@ class ObjectManager extends Phaser.Group {
         this._positionSetting();
         this._createNavigator();
         this._init();
+
+        window.addEventListener('focus', function () {
+            // if(this.pong) this.pong.visible = false;
+            // this._focus = true;
+            // console.log(this)
+            // this._aaa();
+
+
+        });
+        window.addEventListener('blur', function () {
+            // if(this.pong) this.pong.visible = false;
+            // this._focus = false;
+            // this._bbb();
+
+
+        });
+    }
+
+    _aaa() {
+        this._focus = true;
+        console.log("i'm back", this._focus);
+    }
+
+    _bbb() {
+        this._focus = false;
+        console.log("i'm lost", this._focus);
     }
 
     _createNavigator() {
@@ -117456,8 +117514,8 @@ class ObjectManager extends Phaser.Group {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__ = __webpack_require__(1);
 
 
 
@@ -117508,6 +117566,7 @@ class PongPong extends Phaser.Sprite {
         let circleTween = this._game.add.tween(circle).to({ alpha: 1 }, 1000, Phaser.Easing.Bounce.Out, true, 0, 0, false);
         circleTween.onComplete.add(() => {
             if (!infoSnd) {
+                __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND = __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].INFO_SND;
                 __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSound(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].INFO_SND, 0.8);
                 infoSnd = true;
             }
@@ -117809,8 +117868,8 @@ ShuffleRandom = null;
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__ = __webpack_require__(3);
 
 
@@ -117866,7 +117925,7 @@ class Shark extends Phaser.Sprite {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__manager_SoundManager__ = __webpack_require__(3);
 
 
@@ -117976,7 +118035,7 @@ class OceanNavigator extends Phaser.Image {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__data_AssetKey__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_MouseEffect__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__ = __webpack_require__(3);
 
 
@@ -118070,9 +118129,11 @@ class Fish extends Phaser.Sprite {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_AssetKey__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__SeparateAnimation__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__ = __webpack_require__(1);
+
 
 
 
@@ -118114,11 +118175,13 @@ class SubMarineAnimation extends Phaser.Sprite {
     _subMarineMovement(obj) {
 
         __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.allSoundPause();
+        __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND = __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].EFFECT_CLEAR;
         __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.effectSound(__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].EFFECT_CLEAR);
         let tween = this._game.add.tween(obj).to({ x: 550, y: 170 }, 2000, Phaser.Easing.Linear.Out, true, 0, 0, false);
         tween.onComplete.add(effectSndHandler, this);
 
         function effectSndHandler() {
+            __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND = __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].CLEAR_SND;
             __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.effectSound(__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].CLEAR_SND);
         }
 

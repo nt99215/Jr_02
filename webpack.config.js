@@ -6,7 +6,7 @@
  */
 
 const path = require( 'path' );
-
+const webpack = require( 'webpack' );
 module.exports = {
 
   // The point or points to enter the application. 
@@ -26,6 +26,19 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve( __dirname, 'dist' )
   },
+
+  plugins: [
+  /*  new webpack.optimize.UglifyJsPlugin({
+      minimize: true,
+      output: {
+        comments: false
+      },
+      compress: {
+        warnings: false
+      }
+    })
+*/
+  ],
 
   // These options determine how the different types of modules 
   // within a project will be treated.
