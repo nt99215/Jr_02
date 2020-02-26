@@ -2,9 +2,11 @@ let width = 0;
 let height = 0;
 let debug = false;
 let from = null;
-let renderType = "none"
+let renderType = "none";
+let disableVisibility = false;
 let version = "1.0.0";
-let buildDate = "2020.02.11"
+let buildDate = "2020.02.11";
+
 
 export default class GameInfo {
 
@@ -25,6 +27,9 @@ export default class GameInfo {
 
    static get GAME_BUILD_DATE() { return buildDate;}
    static set GAME_BUILD_DATE(num) { buildDate = num;}
+
+   static get DISABLE_VISIBILITY_CHANGE() { return disableVisibility;}
+   static set DISABLE_VISIBILITY_CHANGE(android) {disableVisibility = android}
 
 }
 

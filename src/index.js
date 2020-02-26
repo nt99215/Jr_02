@@ -17,6 +17,8 @@ class index extends Phaser.Game {
             enableDebug: debug
         };
 
+        //this.game.device.android
+
         GameInfo.GAME_WIDTH = w;
         GameInfo.GAME_HEIGHT = h;
         GameInfo.GAME_DEBUG = debug;
@@ -33,6 +35,8 @@ class index extends Phaser.Game {
         this.state.add('Preloader', Preloader, false);
         this.state.add('Main', Main, false);
         this.state.start('Boot');
+
+
 
     }
 
