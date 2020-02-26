@@ -749,9 +749,14 @@ class SoundManager {
         this._queue[key].snd.play();
     }
 
-    effectSoundStop(key) {
+    effectSoundStop(key, remove = false) {
 
         if (SoundManager.instance._queue[key]) if (SoundManager.instance._queue[key].snd.isPlaying) {
+            if (remove) {
+                this._queue[key].snd.stop();
+                return;
+            }
+
             if (SoundManager.instance._queue[key].snd.volume === 0) SoundManager.instance._queue[key].snd.volume = 0.8;else SoundManager.instance._queue[key].snd.volume = 0;
         }
     }
@@ -116144,9 +116149,7 @@ class SubmarineAdventure extends Phaser.Sprite {
 
     update() {
 
-        if (!this._focusCheck()) return;
-
-        if (!__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].IN_GAME || __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].POP_ENABLED || !__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED) return;
+        if (!__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].IN_GAME || __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].POP_ENABLED) return;
 
         if (this._objectManager) {
             let elapsed = this._game.time.elapsedMS / (500 / this._game.time.desiredFps);
@@ -116157,22 +116160,6 @@ class SubmarineAdventure extends Phaser.Sprite {
         if (__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].GAME_FINISH) {
             __WEBPACK_IMPORTED_MODULE_12__manager_ConfigManager__["a" /* default */].prototype.GAME_OVER();
             this._gameOver();
-        }
-    }
-
-    _focusCheck() {
-
-        // if(GameConfig.FOCUS_ENABLED) return true;
-        if (document.hasFocus()) {
-            __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
-            // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
-            __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED = true;
-            return true;
-        } else {
-            __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
-            // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
-            __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED = false;
-            return false;
         }
     }
 
@@ -117088,32 +117075,6 @@ class ObjectManager extends Phaser.Group {
         this._positionSetting();
         this._createNavigator();
         this._init();
-
-        window.addEventListener('focus', function () {
-            // if(this.pong) this.pong.visible = false;
-            // this._focus = true;
-            // console.log(this)
-            // this._aaa();
-
-
-        });
-        window.addEventListener('blur', function () {
-            // if(this.pong) this.pong.visible = false;
-            // this._focus = false;
-            // this._bbb();
-
-
-        });
-    }
-
-    _aaa() {
-        this._focus = true;
-        console.log("i'm back", this._focus);
-    }
-
-    _bbb() {
-        this._focus = false;
-        console.log("i'm lost", this._focus);
     }
 
     _createNavigator() {
@@ -117136,19 +117097,6 @@ class ObjectManager extends Phaser.Group {
         fishPos = arr[0];
         jellyFishPos = jellyArr[0];
         oxyPos = oxyArr[0];
-
-        /* for (let i = 0; i < GameConfig.MAX_CORAL; i++) {
-             let rndNum = sharkPos[i];
-             // pos = new GetRandomPosition(rndNum);
-           }*/
-
-        // console.log('coralSequence', coralSequence);
-        // console.log('sharkPos', sharkPos);
-        // console.log('fishPos', fishPos);
-        // console.log('sharkSequence', sharkSequence);
-        // console.log('jellyFishPos', jellyFishPos);
-        // console.log('oxyPos', oxyPos);
-        // console.log('fishSequence' , fishSequence);
     }
 
     _init() {
@@ -117228,7 +117176,30 @@ class ObjectManager extends Phaser.Group {
         }
     }
 
+    _focusCheck() {
+
+        if (document.hasFocus()) {
+            if (__WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].FOCUS_ENABLED) {
+                return true;
+            } else {
+                __WEBPACK_IMPORTED_MODULE_11__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_10__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+                // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
+                __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].FOCUS_ENABLED = true;
+                // console.log('aa');
+                return true;
+            }
+        } else {
+            __WEBPACK_IMPORTED_MODULE_11__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_10__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_11__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, true);
+            __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].FOCUS_ENABLED = false;
+            // console.log('nn');
+            return false;
+        }
+    }
+
     _update() {
+
+        if (!this._focusCheck()) return;
 
         this._game.physics.arcade.overlap(this.pong.circle, this._enemyGroup.children, this._collisionHandler, null, this);
         this._game.physics.arcade.overlap(this.pong, this._allyGroup.children, this._collisionHandler, null, this);
@@ -117609,7 +117580,7 @@ class PongPong extends Phaser.Sprite {
 
     _infoRemove() {
 
-        __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].INFO_SND);
+        __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].INFO_SND, true);
         for (let i = 0; i < obj.length; i++) {
             obj[i].destroy();
         }
