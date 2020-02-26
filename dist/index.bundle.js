@@ -2027,7 +2027,8 @@ class Boot extends Phaser.State {
         this.game.scale.pageAlignVertically = true;
         this.game.scale.pageAlignHorizontally = true;
         this.game.input.maxPointers = 1;
-        this.game.stage.disableVisibilityChange = this.game.device.android;
+        //BG-> FG 프리징 이슈로 ANDROID && NAVER APP일 경우만 'disableVisibilityChange' 활성화
+        this.game.stage.disableVisibilityChange = this.game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
 
         this.game.scale.refresh();
 
@@ -2039,22 +2040,14 @@ class Boot extends Phaser.State {
 
     preload() {
         this.game.load.image(__WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__["a" /* default */].BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
-        // this.game.load.atlasJSONHash(ResourceKey.PRELOAD_RESOURCE, './asset/game/image/loading.png', './asset/game/image/loading.json')
         this.game.focusLoss = () => {
-            // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-            __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = false;
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, true);
-            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
             console.log('focusLoss');
         };
         this.game.focusGain = () => {
-            // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
-            __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = true;
-            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
             console.log('focusGain');
-        };
-        this.game.onBlur = () => {
-            console.log('onBlur');
         };
     }
 
@@ -116178,7 +116171,7 @@ class SubmarineAdventure extends Phaser.Sprite {
 
     _createBgm() {
         __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.allSoundPause();
-        if (!__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].POP_ENABLED) __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.play(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, true);
+        __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.bgmStart();
     }
 
     update() {

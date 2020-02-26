@@ -80,8 +80,7 @@ export default class SubmarineAdventure extends Phaser.Sprite{
 
     _createBgm() {
         SoundManager.instance.allSoundPause();
-        if(!GameConfig.POP_ENABLED)
-            SoundManager.instance.play(SoundAssetKey.MAIN_BGM, true);
+        SoundManager.instance.bgmStart();
     }
 
 

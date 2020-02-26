@@ -16,7 +16,8 @@ export default class Boot extends Phaser.State {
         this.game.scale.pageAlignVertically = true;
         this.game.scale.pageAlignHorizontally = true;
         this.game.input.maxPointers = 1;
-        this.game.stage.disableVisibilityChange = this.game.device.android;
+        //BG-> FG 프리징 이슈로 ANDROID && NAVER APP일 경우만 'disableVisibilityChange' 활성화
+        this.game.stage.disableVisibilityChange = this.game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
 
         this.game.scale.refresh();
 
@@ -28,23 +29,15 @@ export default class Boot extends Phaser.State {
 
     preload() {
         this.game.load.image(ResourceKey.BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
-        // this.game.load.atlasJSONHash(ResourceKey.PRELOAD_RESOURCE, './asset/game/image/loading.png', './asset/game/image/loading.json')
        this.game.focusLoss = () => {
-           // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-           GameConfig.SOUND_ENABLED = false;
+           SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, true);
-           SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM);
            console.log('focusLoss');
-       }
+       };
        this.game.focusGain = () => {
-           // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
-           GameConfig.SOUND_ENABLED = true;
-           SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM);
+           SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
            console.log('focusGain');
-       }
-       this.game.onBlur = () => {
-           console.log('onBlur');
-       }
+       };
 
     }
 
