@@ -126,7 +126,7 @@ export default class Intro {
         // this._game.scale.startFullScreen();
 
         SoundManager.instance.allSoundPause();
-        SoundManager.instance.play(SoundAssetKey.START_SOUND);
+        SoundManager.instance.effectSound(SoundAssetKey.START_SOUND);
         GameConfig.TUTORIAL_DISABLED = true;
         this.startBtn.input.enabled = false;
         this._game.time.events.add(1200, enabled, this);

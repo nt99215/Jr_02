@@ -93,18 +93,21 @@ export default class Controller extends Phaser.Group{
 
         if(this.soundOnBtn.visible)
         {
-            SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
+            // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0);
+            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, 0);
            // this._game.sound.stopAll();
             GameConfig.SOUND_ENABLED = false;
 
         }
         if(this.soundOffBtn.visible)
         {
-            SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
+            // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8);
+            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, 0.8);
             GameConfig.SOUND_ENABLED = true;
-            SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+            GameConfig.BGM_ENABLED = true;
+            // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
         }
 
         this.soundOnBtn.visible = !this.soundOnBtn.visible;

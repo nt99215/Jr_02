@@ -28,14 +28,15 @@ export default class Boot extends Phaser.State {
     }
 
     preload() {
-        this.game.load.image(ResourceKey.BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
+       this.game.load.image(ResourceKey.BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
        this.game.focusLoss = () => {
-           SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-           SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, true);
+           // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+           // SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0);
+           // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, 0, true);
            // console.log('focusLoss');
        };
        this.game.focusGain = () => {
-           SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+           // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
            // console.log('focusGain');
        };
 

@@ -17,15 +17,13 @@ export default class SoundManager{
         if(GameConfig.INTRO_SND_PLAY)
         {
             GameConfig.CURRENT_GUIDE_SOUND = SoundAssetKey.GAME_INTRO;
-            this.effectSound(SoundAssetKey.GAME_INTRO, 0.8);
+            this.introSound(SoundAssetKey.GAME_INTRO, 0.8);
             GameConfig.INTRO_SND_PLAY = false;
-            setTimeout(this.bgmStart, 2500, this);
-
         }
     }
 
     bgmStart() {
-        if(! GameConfig.POP_ENABLED && GameConfig.SOUND_ENABLED)
+    /*    if(! GameConfig.POP_ENABLED && GameConfig.SOUND_ENABLED)
         {
             GameConfig.BGM_PLAYING = true;
             if(! SoundManager.instance._queue[SoundAssetKey.MAIN_BGM])
@@ -44,14 +42,40 @@ export default class SoundManager{
                 }
 
             }
-        }
+        }*/
+    }
+
+    introSound(key, volume) {
+        if(! GameConfig.SOUND_ENABLED) return;
+        this._queue[key] = {
+            snd: this._game.make.audio(key, volume),
+            volume: volume,
+        };
+
+        this._queue[key].snd.play();
+        this._queue[key].snd.onStop.add(this.bgmSoundStart, this);
+    }
+
+    bgmSoundStart(e = null) {
+
+        console.log("AAAAAA")
+        if(! GameConfig.SOUND_ENABLED) return;
+        let key = SoundAssetKey.MAIN_BGM;
+        let volume = 0.8;
+        this._queue[key] = {
+            snd: this._game.make.audio(key, volume),
+            volume: volume,
+        };
+
+        this._queue[key].snd.loopFull();
+        this._queue[key].snd.play();
     }
 
     effectSound(key, volume = 0.8) {
 
-        // if(this._queue[key] === undefined) return;
+        console.log("effectSound")
         if(! GameConfig.SOUND_ENABLED) return;
-
+        // if(this._queue[key] === undefined) return;
         if (this._queue[key])
         {
 
@@ -69,30 +93,64 @@ export default class SoundManager{
         }
 
         this._queue[key].snd.play();
-
     }
 
-    effectSoundStop(key, remove= false) {
+    effectSoundStop(key, volume = 0.8, remove= false) {
 
+        console.log("effectSoundStop")
         if(SoundManager.instance._queue[key])
-        if (SoundManager.instance._queue[key].snd.isPlaying) {
-            if(remove)
+        {
+            if (SoundManager.instance._queue[key].snd.isPlaying)
             {
-                this._queue[key].snd.stop();
-                return;
+                SoundManager.instance._queue[key].snd.volume = volume;
             }
-
-            if (SoundManager.instance._queue[key].snd.volume === 0)
+            else
             {
-                SoundManager.instance._queue[key].snd.volume = 0.8;
-                if(! this.browserCheck()) return;
-                else
+                if(key === SoundAssetKey.MAIN_BGM)
                 {
-                    if(! GameConfig.BGM_PLAYING) this.bgmResume(SoundAssetKey.MAIN_BGM);
+                    this.bgmSoundStart();
                 }
             }
-            else SoundManager.instance._queue[key].snd.volume = 0;
         }
+
+        // if(! GameConfig.BGM_PLAYING) this.bgmResume(SoundAssetKey.MAIN_BGM);
+        /*  if(this.browserCheck()) return;
+             else
+             {
+                 if(! GameConfig.BGM_PLAYING) this.bgmResume(SoundAssetKey.MAIN_BGM);
+             }*/
+        /* if(remove)
+       {
+           this._queue[key].snd.stop();
+           return;
+       }*/
+
+     /*   SoundManager.instance.play(SoundAssetKey.MAIN_BGM, true);
+
+        if(SoundManager.instance._queue[key])
+        {
+            if (SoundManager.instance._queue[key].snd.isPlaying) {
+                SoundManager.instance._queue[key].snd.volume = volume;
+            }
+            if(key === SoundAssetKey.MAIN_BGM)
+            {
+                console.log(key)
+                SoundManager.instance.play(key, true);
+                if(this._queue[key])
+                {
+                    // this._queue[key].snd.resume();
+
+                }
+
+                else
+                {
+                    // SoundManager.instance.play(key, true);
+                }
+            }
+
+
+        }*/
+
     }
 
 
@@ -111,19 +169,20 @@ export default class SoundManager{
     }
 
 
-    bgmPause(key) {
+    _bgmPause(key) {
 
-        if(this._queue[key])
+     /*   if(this._queue[key])
         {
             this._queue[key].snd.pause();
+            GameConfig.BGM_ENABLED  = false;
             GameConfig.BGM_PLAYING = false;
         }
-
+*/
     }
 
-    bgmResume(key) {
+    _bgmResume(key) {
 
-        if(this._queue[key] === undefined) return;
+     /*   if(this._queue[key] === undefined) return;
         if(this._queue[key].snd.isPlaying || ! GameConfig.SOUND_ENABLED  || ! GameConfig.BGM_ENABLED) return;
         if(GameConfig.BGM_ENABLED && GameConfig.SOUND_ENABLED)
         {
@@ -141,7 +200,7 @@ export default class SoundManager{
 
             GameConfig.BGM_PLAYING = true;
         }
-
+*/
 
     }
 
@@ -157,12 +216,12 @@ export default class SoundManager{
      * @returns {*}
      */
     play(key, loop = false, volume = 0.7, nextKey=null, isCompleteRemove = false){
-        if(! GameConfig.SOUND_ENABLED) return;
+        // if(! GameConfig.SOUND_ENABLED) return;
 
         //var snd = null;
         // console.log("play",key);
 
-
+/*
         if(this._queue[key]){
             this._queue[key].snd.play();
 
@@ -185,7 +244,7 @@ export default class SoundManager{
                 this._queue[key].snd.play();
                 //
             }
-        }
+        }*/
     }
 
     onCompleteSound(e){
@@ -221,14 +280,14 @@ export default class SoundManager{
         // console.log("remove", key);
         if(!key){
             //throw "not key~~"
-            return;
+            // return;
         }
 
         if(this._queue[key]){
-            this._queue[key].snd.onStop.dispose();
-            this._queue[key].snd.destroy();
-            this._queue[key].snd = null;
-            delete this._queue[key];
+            // this._queue[key].snd.onStop.dispose();
+            // this._queue[key].snd.destroy();
+            // this._queue[key].snd = null;
+            // delete this._queue[key];
         }
     }
 

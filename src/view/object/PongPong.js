@@ -142,7 +142,7 @@ export default class PongPong extends Phaser.Sprite{
     _subMarineMovement(obj) {
 
         inGame = false;
-        GameConfig.BGM_ENABLED = false;
+        // GameConfig.BGM_ENABLED = false;
         this.animations.play(AssetKey.IMG_PONG_COMP_PREFIX, 5, true);
 
         this._game.time.events.removeAll();
