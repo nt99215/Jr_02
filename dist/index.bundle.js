@@ -326,6 +326,7 @@ let reset;
 let soundEnabled = true;
 let focusEnabled = true;
 let bgmEnabled = true;
+let bgmPlaying = false;
 let mainController;
 let tutorialDisabled = false;
 let pop = false;
@@ -421,6 +422,13 @@ class GameConfig {
     }
     static set BGM_ENABLED(bool) {
         bgmEnabled = bool;
+    }
+
+    static get BGM_PLAYING() {
+        return bgmPlaying;
+    }
+    static set BGM_PLAYING(bool) {
+        bgmPlaying = bool;
     }
 
     static get DRAGGABLE_AREA() {
@@ -718,6 +726,7 @@ class SoundManager {
 
     bgmStart() {
         if (!__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].POP_ENABLED && __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED) {
+            __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].BGM_PLAYING = true;
             if (!SoundManager.instance._queue[__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM]) {
                 SoundManager.instance.play(__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM, true);
             } else {
@@ -757,8 +766,21 @@ class SoundManager {
                 return;
             }
 
-            if (SoundManager.instance._queue[key].snd.volume === 0) SoundManager.instance._queue[key].snd.volume = 0.8;else SoundManager.instance._queue[key].snd.volume = 0;
+            if (SoundManager.instance._queue[key].snd.volume === 0) {
+                SoundManager.instance._queue[key].snd.volume = 0.8;
+                if (!this.browserCheck()) return;else {
+                    if (!__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].BGM_PLAYING) this.bgmResume(__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+                }
+            } else SoundManager.instance._queue[key].snd.volume = 0;
         }
+    }
+
+    // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+
+
+    //BG-> FG 프리징 이슈로 ANDROID && NAVER APP일 경우만 'disableVisibilityChange' 활성화
+    browserCheck() {
+        return this._game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
     }
 
     allSoundPause() {
@@ -770,6 +792,7 @@ class SoundManager {
 
         if (this._queue[key]) {
             this._queue[key].snd.pause();
+            __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].BGM_PLAYING = false;
         }
     }
 
@@ -784,6 +807,8 @@ class SoundManager {
             } else {
                 SoundManager.instance.play(key, true);
             }
+
+            __WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].BGM_PLAYING = true;
         }
     }
 
@@ -2043,11 +2068,11 @@ class Boot extends Phaser.State {
         this.game.focusLoss = () => {
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, true);
-            console.log('focusLoss');
+            // console.log('focusLoss');
         };
         this.game.focusGain = () => {
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
-            console.log('focusGain');
+            // console.log('focusGain');
         };
     }
 
