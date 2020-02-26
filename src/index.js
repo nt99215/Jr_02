@@ -29,14 +29,10 @@ class index extends Phaser.Game {
         let sm = new ScreenManager(this);
         sm.init();
 
-
-
         this.state.add('Boot', Boot, false);
         this.state.add('Preloader', Preloader, false);
         this.state.add('Main', Main, false);
         this.state.start('Boot');
-
-
 
     }
 

@@ -79,8 +79,6 @@ export default class ObjectManager extends Phaser.Group{
     }
 
     _init() {
-
-
         /**
          * BG FRONT
          * @type {Phaser.Image | Phaser.Loader | * | never}
@@ -197,9 +195,19 @@ export default class ObjectManager extends Phaser.Group{
 
     }
 
+    _aaa()
+    {
+        console.log('aaa')
+    }
+    _bbb()
+    {
+        console.log('bbb')
+    }
+
     _update() {
 
-        if(! this._focusCheck()) return;
+
+        // if(! this._focusCheck()) return;
 
         this._game.physics.arcade.overlap(this.pong.circle, this._enemyGroup.children, this._collisionHandler, null, this);
         this._game.physics.arcade.overlap(this.pong, this._allyGroup.children, this._collisionHandler, null, this);
