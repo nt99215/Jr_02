@@ -53,33 +53,6 @@ export default class ObjectManager extends Phaser.Group{
         this._createNavigator();
         this._init();
 
-        window.addEventListener('focus', function () {
-            // if(this.pong) this.pong.visible = false;
-            // this._focus = true;
-            // console.log(this)
-            // this._aaa();
-
-
-        });
-        window.addEventListener('blur', function () {
-            // if(this.pong) this.pong.visible = false;
-            // this._focus = false;
-            // this._bbb();
-
-
-        });
-
-
-    }
-
-    _aaa(){
-        this._focus = true;
-        console.log("i'm back", this._focus)
-    }
-
-    _bbb(){
-        this._focus = false;
-        console.log("i'm lost", this._focus)
     }
 
     _createNavigator() {
@@ -102,22 +75,6 @@ export default class ObjectManager extends Phaser.Group{
         fishPos = arr[0];
         jellyFishPos = jellyArr[0];
         oxyPos = oxyArr[0];
-
-
-
-       /* for (let i = 0; i < GameConfig.MAX_CORAL; i++) {
-            let rndNum = sharkPos[i];
-            // pos = new GetRandomPosition(rndNum);
-
-        }*/
-
-        // console.log('coralSequence', coralSequence);
-        // console.log('sharkPos', sharkPos);
-        // console.log('fishPos', fishPos);
-        // console.log('sharkSequence', sharkSequence);
-        // console.log('jellyFishPos', jellyFishPos);
-        // console.log('oxyPos', oxyPos);
-        // console.log('fishSequence' , fishSequence);
 
     }
 
@@ -210,9 +167,39 @@ export default class ObjectManager extends Phaser.Group{
 
     }
 
+    _focusCheck() {
 
+
+
+        if(document.hasFocus())
+        {
+            if(GameConfig.FOCUS_ENABLED)
+            {
+                return true;
+            }
+            else
+            {
+                SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+                // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
+                GameConfig.FOCUS_ENABLED = true;
+                // console.log('aa');
+                return true;
+            }
+        }
+        else
+        {
+            SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, true);
+            GameConfig.FOCUS_ENABLED = false;
+            // console.log('nn');
+            return false;
+        }
+
+    }
 
     _update() {
+
+        if(! this._focusCheck()) return;
 
         this._game.physics.arcade.overlap(this.pong.circle, this._enemyGroup.children, this._collisionHandler, null, this);
         this._game.physics.arcade.overlap(this.pong, this._allyGroup.children, this._collisionHandler, null, this);

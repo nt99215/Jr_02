@@ -70,10 +70,16 @@ export default class SoundManager{
 
     }
 
-    effectSoundStop(key) {
+    effectSoundStop(key, remove= false) {
 
         if(SoundManager.instance._queue[key])
         if (SoundManager.instance._queue[key].snd.isPlaying) {
+            if(remove)
+            {
+                this._queue[key].snd.stop();
+                return;
+            }
+
             if (SoundManager.instance._queue[key].snd.volume === 0) SoundManager.instance._queue[key].snd.volume = 0.8;
             else SoundManager.instance._queue[key].snd.volume = 0;
         }
