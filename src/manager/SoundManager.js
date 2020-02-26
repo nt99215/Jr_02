@@ -27,9 +27,11 @@ export default class SoundManager{
     bgmStart() {
         if(! GameConfig.POP_ENABLED && GameConfig.SOUND_ENABLED)
         {
+            GameConfig.BGM_PLAYING = true;
             if(! SoundManager.instance._queue[SoundAssetKey.MAIN_BGM])
             {
                 SoundManager.instance.play(SoundAssetKey.MAIN_BGM, true);
+
 
             }
 
@@ -80,11 +82,27 @@ export default class SoundManager{
                 return;
             }
 
-            if (SoundManager.instance._queue[key].snd.volume === 0) SoundManager.instance._queue[key].snd.volume = 0.8;
+            if (SoundManager.instance._queue[key].snd.volume === 0)
+            {
+                SoundManager.instance._queue[key].snd.volume = 0.8;
+                if(! this.browserCheck()) return;
+                else
+                {
+                    if(! GameConfig.BGM_PLAYING) this.bgmResume(SoundAssetKey.MAIN_BGM);
+                }
+            }
             else SoundManager.instance._queue[key].snd.volume = 0;
         }
     }
 
+
+    // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+
+
+    //BG-> FG 프리징 이슈로 ANDROID && NAVER APP일 경우만 'disableVisibilityChange' 활성화
+    browserCheck() {
+        return this._game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
+    }
 
     allSoundPause(){
 
@@ -98,6 +116,7 @@ export default class SoundManager{
         if(this._queue[key])
         {
             this._queue[key].snd.pause();
+            GameConfig.BGM_PLAYING = false;
         }
 
     }
@@ -119,6 +138,8 @@ export default class SoundManager{
             {
                 SoundManager.instance.play(key, true);
             }
+
+            GameConfig.BGM_PLAYING = true;
         }
 
 

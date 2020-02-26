@@ -32,11 +32,11 @@ export default class Boot extends Phaser.State {
        this.game.focusLoss = () => {
            SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, true);
-           console.log('focusLoss');
+           // console.log('focusLoss');
        };
        this.game.focusGain = () => {
            SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
-           console.log('focusGain');
+           // console.log('focusGain');
        };
 
     }

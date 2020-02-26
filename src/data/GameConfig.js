@@ -7,6 +7,7 @@ let reset;
 let soundEnabled = true;
 let focusEnabled = true;
 let bgmEnabled = true;
+let bgmPlaying = false;
 let mainController;
 let tutorialDisabled = false;
 let pop = false;
@@ -67,6 +68,9 @@ export default class GameConfig {
 
     static get BGM_ENABLED() {return bgmEnabled; }
     static set BGM_ENABLED(bool) {bgmEnabled = bool; }
+
+    static get BGM_PLAYING() {return bgmPlaying; }
+    static set BGM_PLAYING(bool) {bgmPlaying = bool; }
 
     static get DRAGGABLE_AREA() {return draggableArea; }
 
