@@ -116162,13 +116162,15 @@ class SubmarineAdventure extends Phaser.Sprite {
 
     _focusCheck() {
 
+        // if(GameConfig.FOCUS_ENABLED) return true;
         if (document.hasFocus()) {
-            if (__WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED) return true;
             __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
             __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED = true;
             return true;
         } else {
             __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
             __WEBPACK_IMPORTED_MODULE_4__data_GameConfig__["a" /* default */].FOCUS_ENABLED = false;
             return false;
         }
