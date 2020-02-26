@@ -1118,6 +1118,75 @@ class FishTweener {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+let width = 0;
+let height = 0;
+let debug = false;
+let from = null;
+let renderType = "none";
+let disableVisibility = false;
+let version = "1.0.0";
+let buildDate = "2020.02.11";
+
+class GameInfo {
+
+   static get GAME_WIDTH() {
+      return width;
+   }
+   static set GAME_WIDTH(num) {
+      width = num;
+   }
+
+   static get GAME_HEIGHT() {
+      return height;
+   }
+   static set GAME_HEIGHT(num) {
+      height = num;
+   }
+
+   static get GAME_DEBUG() {
+      return debug;
+   }
+   static set GAME_DEBUG(bool) {
+      debug = bool;
+   }
+
+   static get GAME_RENDER_TYPE() {
+      return renderType;
+   }
+   static set GAME_RENDER_TYPE(obj) {
+      renderType = obj;
+   }
+
+   static get GAME_VERSION() {
+      return version;
+   }
+   static set GAME_VERSION(num) {
+      version = num;
+   }
+
+   static get GAME_BUILD_DATE() {
+      return buildDate;
+   }
+   static set GAME_BUILD_DATE(num) {
+      buildDate = num;
+   }
+
+   static get DISABLE_VISIBILITY_CHANGE() {
+      return disableVisibility;
+   }
+   static set DISABLE_VISIBILITY_CHANGE(android) {
+      disableVisibility = android;
+   }
+
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = GameInfo;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 class ScreenManager {
     constructor() {
         ScreenManager.instance = this;
@@ -1278,7 +1347,7 @@ class ScreenManager {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1298,67 +1367,6 @@ class ResourceKey {
 ResourceKey.data = null;
 
 /***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-let width = 0;
-let height = 0;
-let debug = false;
-let from = null;
-let renderType = "none";
-let version = "1.0.0";
-let buildDate = "2020.02.11";
-
-class GameInfo {
-
-   static get GAME_WIDTH() {
-      return width;
-   }
-   static set GAME_WIDTH(num) {
-      width = num;
-   }
-
-   static get GAME_HEIGHT() {
-      return height;
-   }
-   static set GAME_HEIGHT(num) {
-      height = num;
-   }
-
-   static get GAME_DEBUG() {
-      return debug;
-   }
-   static set GAME_DEBUG(bool) {
-      debug = bool;
-   }
-
-   static get GAME_RENDER_TYPE() {
-      return renderType;
-   }
-   static set GAME_RENDER_TYPE(obj) {
-      renderType = obj;
-   }
-
-   static get GAME_VERSION() {
-      return version;
-   }
-   static set GAME_VERSION(num) {
-      version = num;
-   }
-
-   static get GAME_BUILD_DATE() {
-      return buildDate;
-   }
-   static set GAME_BUILD_DATE(num) {
-      buildDate = num;
-   }
-
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = GameInfo;
-
-
-/***/ }),
 /* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1368,7 +1376,7 @@ class GameInfo {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__manager_SoundManager__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__object_SeparateAnimation__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loader_manager_ScreenManager__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loader_manager_ScreenManager__ = __webpack_require__(8);
 
 
 
@@ -1942,10 +1950,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__loader_state_Boot__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__loader_state_Preloader__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loader_state_Main__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_const_GameInfo__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__loader_const_GameInfo__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__manager_SoundManager__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__loader_manager_LoadManager__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__loader_manager_ScreenManager__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__loader_manager_ScreenManager__ = __webpack_require__(8);
 
 
 
@@ -1964,6 +1972,8 @@ class index extends Phaser.Game {
                         multiTexture: true,
                         enableDebug: debug
                 };
+
+                //this.game.device.android
 
                 __WEBPACK_IMPORTED_MODULE_3__loader_const_GameInfo__["a" /* default */].GAME_WIDTH = w;
                 __WEBPACK_IMPORTED_MODULE_3__loader_const_GameInfo__["a" /* default */].GAME_HEIGHT = h;
@@ -1994,10 +2004,12 @@ window.nts.index = new index('main_doc', 1280, 720);
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__const_GameInfo__ = __webpack_require__(7);
+
 
 
 
@@ -2015,7 +2027,7 @@ class Boot extends Phaser.State {
         this.game.scale.pageAlignVertically = true;
         this.game.scale.pageAlignHorizontally = true;
         this.game.input.maxPointers = 1;
-        this.game.stage.disableVisibilityChange = true;
+        this.game.stage.disableVisibilityChange = this.game.device.android;
 
         this.game.scale.refresh();
 
@@ -2029,13 +2041,20 @@ class Boot extends Phaser.State {
         this.game.load.image(__WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__["a" /* default */].BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
         // this.game.load.atlasJSONHash(ResourceKey.PRELOAD_RESOURCE, './asset/game/image/loading.png', './asset/game/image/loading.json')
         this.game.focusLoss = () => {
-            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = false;
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, true);
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
             console.log('focusLoss');
         };
         this.game.focusGain = () => {
-            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = true;
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
             console.log('focusGain');
+        };
+        this.game.onBlur = () => {
+            console.log('onBlur');
         };
     }
 
@@ -115576,13 +115595,13 @@ process.umask = function() { return 0; };
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__const_GameInfo__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__const_GameInfo__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const_PreloadData__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__view_Intro__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__view_ResultView__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__data_GameConfig__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__manager_ScreenManager__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__manager_ScreenManager__ = __webpack_require__(8);
 
 
 
@@ -116016,10 +116035,10 @@ class BackgroundEffect extends Phaser.Group {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__const_GameInfo__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__const_GameInfo__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__view_ResultView__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__view_Intro__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_ResourceKey__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__const_ResourceKey__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__manager_LoadManager__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__SubmarineAdventure__ = __webpack_require__(27);
 
@@ -116082,7 +116101,7 @@ class Main extends Phaser.State {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__manager_ObjectManager__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__util_WebEnabledCheck__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__view_ResultView__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__loader_manager_ScreenManager__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__loader_manager_ScreenManager__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__manager_ConfigManager__ = __webpack_require__(14);
 
 
@@ -117191,7 +117210,6 @@ class ObjectManager extends Phaser.Group {
     }
 
     _focusCheck() {
-
         if (document.hasFocus()) {
             if (__WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].FOCUS_ENABLED) {
                 return true;
@@ -117209,13 +117227,6 @@ class ObjectManager extends Phaser.Group {
             // console.log('nn');
             return false;
         }
-    }
-
-    _aaa() {
-        console.log('aaa');
-    }
-    _bbb() {
-        console.log('bbb');
     }
 
     _update() {
