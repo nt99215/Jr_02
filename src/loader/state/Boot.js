@@ -17,7 +17,8 @@ export default class Boot extends Phaser.State {
         this.game.scale.pageAlignHorizontally = true;
         this.game.input.maxPointers = 1;
         //BG-> FG 프리징 이슈로 ANDROID && NAVER APP일 경우만 'disableVisibilityChange' 활성화
-        this.game.stage.disableVisibilityChange = this.game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
+        // this.game.stage.disableVisibilityChange = this.game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
+        this.game.stage.disableVisibilityChange = false;
 
         this.game.scale.refresh();
 
@@ -34,17 +35,18 @@ export default class Boot extends Phaser.State {
         window.onblur = () => {
             if(this._appCheck())
             {
-                // GameConfig.SOUND_ENABLED = false;
-                SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, GameConfig.MUTE_SOUND_VOLUME);
-                SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, GameConfig.MUTE_SOUND_VOLUME, false);
-                // console.log('onblur~');
+                GameConfig.GAME_FOCUS = false;
+                // SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, GameConfig.MUTE_SOUND_VOLUME);
+                // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, GameConfig.MUTE_SOUND_VOLUME, false);
+                console.log('onblur~');
             }
 
         };
         window.onfocus = () => {
             if(this._appCheck()) {
-                if(GameConfig.SOUND_ENABLED) SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
-                // console.log('onfocus');
+                GameConfig.GAME_FOCUS = true;
+                // if(GameConfig.SOUND_ENABLED) SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
+                console.log('onfocus');
             }
         };
 

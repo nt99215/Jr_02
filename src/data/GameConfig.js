@@ -42,6 +42,7 @@ let currentGuideSound = null;
 let helpBtn = null;
 let draggableArea = 1152;
 let muteSoundVolume = 0.0001;
+let gameFocus = true;
 const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
 const appEnabledString = 'app';
 const webEnabledString = 'web';
@@ -117,6 +118,8 @@ export default class GameConfig {
     static set GAME_SCORE(num) { gameScore = num; }
 
     static get MUTE_SOUND_VOLUME() { return muteSoundVolume; }
+    static set GAME_FOCUS(bool) { gameFocus = bool; }
+    static get GAME_FOCUS() { return gameFocus; }
 
     static get CURRENT_GUIDE_SOUND() { return currentGuideSound; }
     static set CURRENT_GUIDE_SOUND(obj) { currentGuideSound = obj; }

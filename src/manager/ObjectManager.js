@@ -194,7 +194,13 @@ export default class ObjectManager extends Phaser.Group{
 
     _update() {
 
-        // if(! this._focusCheck()) return;
+        if(! GameConfig.GAME_FOCUS)
+        {
+            this.pong.visible = false;
+            return;
+        }
+
+        if(! this.pong.visible) this.pong.visible = true;
 
         this._game.physics.arcade.overlap(this.pong.circle, this._enemyGroup.children, this._collisionHandler, null, this);
         this._game.physics.arcade.overlap(this.pong, this._allyGroup.children, this._collisionHandler, null, this);
