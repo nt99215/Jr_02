@@ -28,8 +28,28 @@ export default class Boot extends Phaser.State {
     }
 
     preload() {
+
        this.game.load.image(ResourceKey.BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
-       this.game.focusLoss = () => {
+
+        window.onblur = () => {
+            if(this._appCheck())
+            {
+                GameConfig.SOUND_ENABLED = false;
+                SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, GameConfig.MUTE_SOUND_VOLUME);
+                SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, GameConfig.MUTE_SOUND_VOLUME, false);
+                console.log('focusLoss~');
+            }
+
+        };
+        window.onfocus = () => {
+            if(this._appCheck()) {
+                GameConfig.SOUND_ENABLED = true;
+                SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
+                console.log('focusGain');
+            }
+        };
+
+      /* this.game.focusLoss = () => {
            if(this._appCheck())
            {
                GameConfig.SOUND_ENABLED = false;
@@ -45,7 +65,7 @@ export default class Boot extends Phaser.State {
                SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
                console.log('focusGain');
            }
-       };
+       };*/
 
     }
 

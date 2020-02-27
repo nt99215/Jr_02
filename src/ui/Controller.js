@@ -82,7 +82,7 @@ export default class Controller extends Phaser.Group{
     }
 
     onBack(){
-        SoundManager.instance.play(SoundAssetKey.SND_PREV, false);
+        SoundManager.instance.effectSound(SoundAssetKey.SND_PREV, 0.8);
         this._game.time.events.add(400, close, this);
         function close() {
             top.location.href = GameConfig.APP_URL;
@@ -123,16 +123,6 @@ export default class Controller extends Phaser.Group{
         btn.setDownSound(snd);
     }
 
-    _sndPlay(on, off) {
-
-        this.soundOnBtn.visible = !this.soundOnBtn.visible;
-        this.soundOffBtn.visible = !this.soundOffBtn.visible;
-        if(SoundManager.instance._queue[on] && SoundManager.instance._queue[off].snd.isPlaying)
-        {
-            SoundManager.instance._queue[off].snd.stop();
-        }
-        SoundManager.instance.play(on, false);
-    }
 
     _btnDisabled() {
         this._gameGroup.visible = false;

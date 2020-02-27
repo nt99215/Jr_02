@@ -18,8 +18,7 @@ export default class BgView{
 
     bgClick() {
         if(! GameConfig.IN_GAME) return;
-        // SoundManager.instance.play(SoundAssetKey.BASIC_TOUCH_SOUND, false);
-        SoundManager.instance.play(SoundAssetKey.EFFECT_OXY_NEW, false);
+        SoundManager.instance.effectSound(SoundAssetKey.EFFECT_OXY_NEW);
         new MouseEffect(this._game, this._game.input.x, this._game.input.y, 50, 1);
 
     }
