@@ -1973,8 +1973,10 @@ class Boot extends Phaser.State {
     }
 
     preload() {
+
         this.game.load.image(__WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__["a" /* default */].BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
-        this.game.focusLoss = () => {
+
+        window.onblur = () => {
             if (this._appCheck()) {
                 __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = false;
                 __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].MUTE_SOUND_VOLUME);
@@ -1982,13 +1984,30 @@ class Boot extends Phaser.State {
                 console.log('focusLoss~');
             }
         };
-        this.game.focusGain = () => {
+        window.onfocus = () => {
             if (this._appCheck()) {
                 __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = true;
                 __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
                 console.log('focusGain');
             }
         };
+
+        /* this.game.focusLoss = () => {
+             if(this._appCheck())
+             {
+                 GameConfig.SOUND_ENABLED = false;
+                 SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, GameConfig.MUTE_SOUND_VOLUME);
+                 SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, GameConfig.MUTE_SOUND_VOLUME, false);
+                 console.log('focusLoss~');
+             }
+           };
+         this.game.focusGain = () => {
+             if(this._appCheck()) {
+                 GameConfig.SOUND_ENABLED = true;
+                 SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
+                 console.log('focusGain');
+             }
+         };*/
     }
 
     _appCheck() {
@@ -116240,7 +116259,7 @@ class Controller extends Phaser.Group {
     }
 
     onBack() {
-        __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.play(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].SND_PREV, false);
+        __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSound(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].SND_PREV, 0.8);
         this._game.time.events.add(400, close, this);
         function close() {
             top.location.href = __WEBPACK_IMPORTED_MODULE_2__data_GameConfig__["a" /* default */].APP_URL;
@@ -116275,16 +116294,6 @@ class Controller extends Phaser.Group {
         __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.allSoundPause();
         snd = this._game.add.audio(sndKey);
         btn.setDownSound(snd);
-    }
-
-    _sndPlay(on, off) {
-
-        this.soundOnBtn.visible = !this.soundOnBtn.visible;
-        this.soundOffBtn.visible = !this.soundOffBtn.visible;
-        if (__WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance._queue[on] && __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance._queue[off].snd.isPlaying) {
-            __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance._queue[off].snd.stop();
-        }
-        __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.play(on, false);
     }
 
     _btnDisabled() {
@@ -116972,8 +116981,7 @@ class BgView {
 
     bgClick() {
         if (!__WEBPACK_IMPORTED_MODULE_2__data_GameConfig__["a" /* default */].IN_GAME) return;
-        // SoundManager.instance.play(SoundAssetKey.BASIC_TOUCH_SOUND, false);
-        __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.play(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].EFFECT_OXY_NEW, false);
+        __WEBPACK_IMPORTED_MODULE_3__manager_SoundManager__["a" /* default */].instance.effectSound(__WEBPACK_IMPORTED_MODULE_4__data_SoundAssetKey__["a" /* default */].EFFECT_OXY_NEW);
         new __WEBPACK_IMPORTED_MODULE_1__ui_MouseEffect__["a" /* default */](this._game, this._game.input.x, this._game.input.y, 50, 1);
     }
 
