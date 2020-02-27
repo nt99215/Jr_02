@@ -41,7 +41,7 @@ let endingInterval = 5;  // milliSecond
 let currentGuideSound = null;
 let helpBtn = null;
 let draggableArea = 1152;
-let muteSoundVolume = 0.001;
+let muteSoundVolume = 0.0001;
 const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
 const appEnabledString = 'app';
 const webEnabledString = 'web';

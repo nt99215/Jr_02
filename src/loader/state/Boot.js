@@ -34,18 +34,17 @@ export default class Boot extends Phaser.State {
         window.onblur = () => {
             if(this._appCheck())
             {
-                GameConfig.SOUND_ENABLED = false;
+                // GameConfig.SOUND_ENABLED = false;
                 SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, GameConfig.MUTE_SOUND_VOLUME);
                 SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, GameConfig.MUTE_SOUND_VOLUME, false);
-                console.log('focusLoss~');
+                // console.log('onblur~');
             }
 
         };
         window.onfocus = () => {
             if(this._appCheck()) {
-                GameConfig.SOUND_ENABLED = true;
-                SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
-                console.log('focusGain');
+                if(GameConfig.SOUND_ENABLED) SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
+                // console.log('onfocus');
             }
         };
 
