@@ -360,7 +360,7 @@ let endingInterval = 5; // milliSecond
 let currentGuideSound = null;
 let helpBtn = null;
 let draggableArea = 1152;
-let muteSoundVolume = 0.001;
+let muteSoundVolume = 0.0001;
 const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
 const appEnabledString = 'app';
 const webEnabledString = 'web';
@@ -1978,17 +1978,16 @@ class Boot extends Phaser.State {
 
         window.onblur = () => {
             if (this._appCheck()) {
-                __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = false;
+                // GameConfig.SOUND_ENABLED = false;
                 __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].MUTE_SOUND_VOLUME);
                 __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].MUTE_SOUND_VOLUME, false);
-                console.log('focusLoss~');
+                // console.log('onblur~');
             }
         };
         window.onfocus = () => {
             if (this._appCheck()) {
-                __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = true;
-                __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
-                console.log('focusGain');
+                if (__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED) __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
+                // console.log('onfocus');
             }
         };
 
