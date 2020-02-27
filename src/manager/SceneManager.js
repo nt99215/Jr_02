@@ -33,7 +33,7 @@ export default class SceneManager {
 
         this._sceneCheck();
 
-        SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0);
+        SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.1);
 
         if(GameConfig.SCENE_STATE === 'mainScene')
         {

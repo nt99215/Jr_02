@@ -94,8 +94,8 @@ export default class Controller extends Phaser.Group{
         if(this.soundOnBtn.visible)
         {
             // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-            SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0);
-            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, 0);
+            SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.1);
+            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, 0.1);
            // this._game.sound.stopAll();
             GameConfig.SOUND_ENABLED = false;
 
