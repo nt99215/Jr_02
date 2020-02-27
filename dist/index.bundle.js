@@ -361,6 +361,7 @@ let currentGuideSound = null;
 let helpBtn = null;
 let draggableArea = 1152;
 let muteSoundVolume = 0.0001;
+let gameFocus = true;
 const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
 const appEnabledString = 'app';
 const webEnabledString = 'web';
@@ -535,6 +536,12 @@ class GameConfig {
 
     static get MUTE_SOUND_VOLUME() {
         return muteSoundVolume;
+    }
+    static set GAME_FOCUS(bool) {
+        gameFocus = bool;
+    }
+    static get GAME_FOCUS() {
+        return gameFocus;
     }
 
     static get CURRENT_GUIDE_SOUND() {
@@ -1962,7 +1969,8 @@ class Boot extends Phaser.State {
         this.game.scale.pageAlignHorizontally = true;
         this.game.input.maxPointers = 1;
         //BG-> FG 프리징 이슈로 ANDROID && NAVER APP일 경우만 'disableVisibilityChange' 활성화
-        this.game.stage.disableVisibilityChange = this.game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
+        // this.game.stage.disableVisibilityChange = this.game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1;
+        this.game.stage.disableVisibilityChange = false;
 
         this.game.scale.refresh();
 
@@ -1978,16 +1986,17 @@ class Boot extends Phaser.State {
 
         window.onblur = () => {
             if (this._appCheck()) {
-                // GameConfig.SOUND_ENABLED = false;
-                __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].MUTE_SOUND_VOLUME);
-                __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].MUTE_SOUND_VOLUME, false);
-                // console.log('onblur~');
+                __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].GAME_FOCUS = false;
+                // SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, GameConfig.MUTE_SOUND_VOLUME);
+                // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, GameConfig.MUTE_SOUND_VOLUME, false);
+                console.log('onblur~');
             }
         };
         window.onfocus = () => {
             if (this._appCheck()) {
-                if (__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED) __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
-                // console.log('onfocus');
+                __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].GAME_FOCUS = true;
+                // if(GameConfig.SOUND_ENABLED) SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
+                console.log('onfocus');
             }
         };
 
@@ -117186,7 +117195,12 @@ class ObjectManager extends Phaser.Group {
 
     _update() {
 
-        // if(! this._focusCheck()) return;
+        if (!__WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].GAME_FOCUS) {
+            this.pong.visible = false;
+            return;
+        }
+
+        if (!this.pong.visible) this.pong.visible = true;
 
         this._game.physics.arcade.overlap(this.pong.circle, this._enemyGroup.children, this._collisionHandler, null, this);
         this._game.physics.arcade.overlap(this.pong, this._allyGroup.children, this._collisionHandler, null, this);
