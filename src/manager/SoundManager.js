@@ -58,7 +58,7 @@ export default class SoundManager{
 
     bgmSoundStart(e = null) {
 
-        console.log("AAAAAA")
+        console.log("bgmSoundStart")
         if(! GameConfig.SOUND_ENABLED) return;
         let key = SoundAssetKey.MAIN_BGM;
         let volume = 0.8;
@@ -73,7 +73,8 @@ export default class SoundManager{
 
     effectSound(key, volume = 0.8) {
 
-        console.log("effectSound")
+        console.log("effectSound");
+        this.effectSoundStop(SoundAssetKey.MAIN_BGM,0.8, true)
         if(! GameConfig.SOUND_ENABLED) return;
         // if(this._queue[key] === undefined) return;
         if (this._queue[key])
@@ -95,21 +96,28 @@ export default class SoundManager{
         this._queue[key].snd.play();
     }
 
-    effectSoundStop(key, volume = 0.8, remove= false) {
+    effectSoundStop(key, volume = 0.8, bgm= false) {
 
-        console.log("effectSoundStop")
-        if(SoundManager.instance._queue[key])
+        console.log("effectSoundStop");
+        if(this._queue[key])
         {
-            if (SoundManager.instance._queue[key].snd.isPlaying)
+            if (this._queue[key].snd.isPlaying)
             {
-                SoundManager.instance._queue[key].snd.volume = volume;
+                this._queue[key].snd.volume = volume;
             }
             else
             {
-                if(key === SoundAssetKey.MAIN_BGM)
-                {
-                    this.bgmSoundStart();
-                }
+                if(bgm && key === SoundAssetKey.MAIN_BGM)
+                this._queue[key].snd.play();
+            }
+
+        }
+        else
+        {
+
+            if(bgm && key === SoundAssetKey.MAIN_BGM)
+            {
+                this.bgmSoundStart();
             }
         }
 

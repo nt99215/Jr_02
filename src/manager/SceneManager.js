@@ -25,7 +25,7 @@ export default class SceneManager {
 
         GameConfig.POP_ENABLED = false;
         GameConfig.MAIN_CONTROLLER._btnEnabled();
-        SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
+        SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
 
     }
 
@@ -33,7 +33,7 @@ export default class SceneManager {
 
         this._sceneCheck();
 
-        SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+        SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0);
 
         if(GameConfig.SCENE_STATE === 'mainScene')
         {

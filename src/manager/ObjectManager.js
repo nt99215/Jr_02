@@ -165,7 +165,7 @@ export default class ObjectManager extends Phaser.Group{
 
     }
 
-    _focusCheck() {
+    /*_focusCheck() {
         if(document.hasFocus())
         {
             if(GameConfig.FOCUS_ENABLED)
@@ -190,7 +190,7 @@ export default class ObjectManager extends Phaser.Group{
             return false;
         }
 
-    }
+    }*/
 
     _update() {
 

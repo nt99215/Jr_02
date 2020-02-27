@@ -91,7 +91,7 @@ export default class PongPong extends Phaser.Sprite{
 
     _infoRemove() {
 
-        SoundManager.instance.effectSoundStop(SoundAssetKey.INFO_SND, true);
+        SoundManager.instance.effectSoundStop(SoundAssetKey.INFO_SND);
         for(let i = 0; i<obj.length; i++)
         {
             obj[i].destroy();
