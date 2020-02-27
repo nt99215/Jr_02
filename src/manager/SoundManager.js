@@ -58,7 +58,7 @@ export default class SoundManager{
 
     bgmSoundStart(e = null) {
 
-        console.log("bgmSoundStart")
+        // console.log("bgmSoundStart")
         if(! GameConfig.SOUND_ENABLED) return;
         let key = SoundAssetKey.MAIN_BGM;
         let volume = 0.8;
@@ -74,8 +74,8 @@ export default class SoundManager{
     effectSound(key, volume = 0.8) {
 
         if(! GameConfig.SOUND_ENABLED) return;
-        console.log("effectSound");
-        this.effectSoundStop(SoundAssetKey.MAIN_BGM,0.8, true)
+        // console.log("effectSound");
+        // this.effectSoundStop(SoundAssetKey.MAIN_BGM,0.8, true)
         // if(this._queue[key] === undefined) return;
         if (this._queue[key])
         {
@@ -96,13 +96,18 @@ export default class SoundManager{
         this._queue[key].snd.play();
     }
 
-    effectSoundStop(key, volume = 0.8, bgm= false) {
+    effectSoundStop(key, volume = 0.8, bgm= false, remove = false) {
 
-        console.log("effectSoundStop");
+        // console.log("effectSoundStop");
         if(this._queue[key])
         {
             if (this._queue[key].snd.isPlaying)
             {
+                if(remove)
+                {
+                    this._queue[key].snd.stop();
+                    return;
+                }
                 this._queue[key].snd.volume = volume;
             }
             else

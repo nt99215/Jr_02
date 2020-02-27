@@ -30,18 +30,28 @@ export default class Boot extends Phaser.State {
     preload() {
        this.game.load.image(ResourceKey.BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
        this.game.focusLoss = () => {
-           // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-           GameConfig.SOUND_ENABLED = false;
-           SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.1);
-           SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, 0.1, false);
-           console.log('focusLoss~');
+           if(this._appCheck())
+           {
+               GameConfig.SOUND_ENABLED = false;
+               SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, GameConfig.MUTE_SOUND_VOLUME);
+               SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, GameConfig.MUTE_SOUND_VOLUME, false);
+               console.log('focusLoss~');
+           }
+
        };
        this.game.focusGain = () => {
-           GameConfig.SOUND_ENABLED = true;
-           SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
-           console.log('focusGain');
+           if(this._appCheck()) {
+               GameConfig.SOUND_ENABLED = true;
+               SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0.8, true);
+               console.log('focusGain');
+           }
        };
 
+    }
+
+    _appCheck() {
+        if (this.game.device.android && navigator.userAgent.indexOf('NAVER(inapp') !== -1) return true;
+        else return false;
     }
 
     create() {

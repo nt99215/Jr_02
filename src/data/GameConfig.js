@@ -13,7 +13,9 @@ let tutorialDisabled = false;
 let pop = false;
 let finish = false;
 let oceanLength = 5;  //map length
+// let oceanLength = 1;  //map length
 let mapSpeed = 4;
+// let mapSpeed = 14;
 let mapSpeedUp = 7;
 let movingSpeed = 100;
 let objectScale = 0.85;
@@ -39,6 +41,7 @@ let endingInterval = 5;  // milliSecond
 let currentGuideSound = null;
 let helpBtn = null;
 let draggableArea = 1152;
+let muteSoundVolume = 0.001;
 const appUrl = 'https://jr.msdl.naver.com/jrapp?cmd=close&type=webview&version=1';
 const appEnabledString = 'app';
 const webEnabledString = 'web';
@@ -112,6 +115,8 @@ export default class GameConfig {
 
     static get GAME_SCORE() { return gameScore; }
     static set GAME_SCORE(num) { gameScore = num; }
+
+    static get MUTE_SOUND_VOLUME() { return muteSoundVolume; }
 
     static get CURRENT_GUIDE_SOUND() { return currentGuideSound; }
     static set CURRENT_GUIDE_SOUND(obj) { currentGuideSound = obj; }

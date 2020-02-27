@@ -139,7 +139,7 @@ export default class ResultView extends Phaser.Group{
             this._gameGroup.addChild(this.backGroup);
 
             SoundManager.instance.allSoundPause();
-            SoundManager.instance.play(guideSnd, false);
+            SoundManager.instance.effectSound(guideSnd);
 
 
         }
