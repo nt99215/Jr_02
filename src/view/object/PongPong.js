@@ -17,6 +17,7 @@ export default class PongPong extends Phaser.Sprite{
         this.anchor.setTo(0.5, 0.5);
         this._gameGroup = this._game.add.group();
         this.circle = null;
+        this.infoRemove = false;
         inGame = true;
 
         //inGame
@@ -91,11 +92,13 @@ export default class PongPong extends Phaser.Sprite{
 
     _infoRemove() {
 
-        SoundManager.instance.effectSoundStop(SoundAssetKey.INFO_SND, 0.8, false, true);
         for(let i = 0; i<obj.length; i++)
         {
             obj[i].destroy();
         }
+        if(this.infoRemove) return;
+        SoundManager.instance.effectSoundStop(SoundAssetKey.INFO_SND, 0.8, false, true);
+        this.infoRemove = true;
     }
 
     _makeRadius() {
