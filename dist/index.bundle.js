@@ -754,7 +754,7 @@ class SoundManager {
 
     bgmSoundStart(e = null) {
 
-        console.log("AAAAAA");
+        console.log("bgmSoundStart");
         if (!__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED) return;
         let key = __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM;
         let volume = 0.8;
@@ -770,6 +770,7 @@ class SoundManager {
     effectSound(key, volume = 0.8) {
 
         console.log("effectSound");
+        this.effectSoundStop(__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
         if (!__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED) return;
         // if(this._queue[key] === undefined) return;
         if (this._queue[key]) {
@@ -787,16 +788,19 @@ class SoundManager {
         this._queue[key].snd.play();
     }
 
-    effectSoundStop(key, volume = 0.8, remove = false) {
+    effectSoundStop(key, volume = 0.8, bgm = false) {
 
         console.log("effectSoundStop");
-        if (SoundManager.instance._queue[key]) {
-            if (SoundManager.instance._queue[key].snd.isPlaying) {
-                SoundManager.instance._queue[key].snd.volume = volume;
+        if (this._queue[key]) {
+            if (this._queue[key].snd.isPlaying) {
+                this._queue[key].snd.volume = volume;
             } else {
-                if (key === __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM) {
-                    this.bgmSoundStart();
-                }
+                if (bgm && key === __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM) this._queue[key].snd.play();
+            }
+        } else {
+
+            if (bgm && key === __WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM) {
+                this.bgmSoundStart();
             }
         }
 
@@ -1854,14 +1858,14 @@ class SceneManager {
 
         __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].POP_ENABLED = false;
         __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].MAIN_CONTROLLER._btnEnabled();
-        __WEBPACK_IMPORTED_MODULE_0__SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+        __WEBPACK_IMPORTED_MODULE_0__SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
     }
 
     _destroy() {
 
         this._sceneCheck();
 
-        __WEBPACK_IMPORTED_MODULE_0__SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+        __WEBPACK_IMPORTED_MODULE_0__SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0);
 
         if (__WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].SCENE_STATE === 'mainScene') {
             this.scene._objectPause();
@@ -2133,13 +2137,13 @@ class Boot extends Phaser.State {
         this.game.load.image(__WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__["a" /* default */].BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
         this.game.focusLoss = () => {
             // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
-            // SoundManager.instance.effectSoundStop(SoundAssetKey.MAIN_BGM, 0);
-            // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, 0, true);
-            // console.log('focusLoss');
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0);
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, 0, false);
+            console.log('focusLoss');
         };
         this.game.focusGain = () => {
-            // SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
-            // console.log('focusGain');
+            __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
+            console.log('focusGain');
         };
     }
 
@@ -116263,7 +116267,7 @@ class SubmarineAdventure extends Phaser.Sprite {
 
     _createBgm() {
         // SoundManager.instance.allSoundPause();
-        __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8);
+        __WEBPACK_IMPORTED_MODULE_0__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
     }
 
     update() {
@@ -117297,25 +117301,31 @@ class ObjectManager extends Phaser.Group {
         }
     }
 
-    _focusCheck() {
-        if (document.hasFocus()) {
-            if (__WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].FOCUS_ENABLED) {
+    /*_focusCheck() {
+        if(document.hasFocus())
+        {
+            if(GameConfig.FOCUS_ENABLED)
+            {
                 return true;
-            } else {
-                __WEBPACK_IMPORTED_MODULE_11__manager_SoundManager__["a" /* default */].instance.bgmResume(__WEBPACK_IMPORTED_MODULE_10__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
+            }
+            else
+            {
+                SoundManager.instance.bgmResume(SoundAssetKey.MAIN_BGM);
                 // SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND);
-                __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].FOCUS_ENABLED = true;
+                GameConfig.FOCUS_ENABLED = true;
                 // console.log('aa');
                 return true;
             }
-        } else {
-            __WEBPACK_IMPORTED_MODULE_11__manager_SoundManager__["a" /* default */].instance.bgmPause(__WEBPACK_IMPORTED_MODULE_10__data_SoundAssetKey__["a" /* default */].MAIN_BGM);
-            __WEBPACK_IMPORTED_MODULE_11__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, true);
-            __WEBPACK_IMPORTED_MODULE_1__data_GameConfig__["a" /* default */].FOCUS_ENABLED = false;
+        }
+        else
+        {
+            SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            SoundManager.instance.effectSoundStop(GameConfig.CURRENT_GUIDE_SOUND, true);
+            GameConfig.FOCUS_ENABLED = false;
             // console.log('nn');
             return false;
         }
-    }
+      }*/
 
     _update() {
 
@@ -117700,7 +117710,7 @@ class PongPong extends Phaser.Sprite {
 
     _infoRemove() {
 
-        __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].INFO_SND, true);
+        __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].INFO_SND);
         for (let i = 0; i < obj.length; i++) {
             obj[i].destroy();
         }
