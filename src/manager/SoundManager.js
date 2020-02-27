@@ -73,9 +73,9 @@ export default class SoundManager{
 
     effectSound(key, volume = 0.8) {
 
+        if(! GameConfig.SOUND_ENABLED) return;
         console.log("effectSound");
         this.effectSoundStop(SoundAssetKey.MAIN_BGM,0.8, true)
-        if(! GameConfig.SOUND_ENABLED) return;
         // if(this._queue[key] === undefined) return;
         if (this._queue[key])
         {
