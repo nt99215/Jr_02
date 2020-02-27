@@ -769,9 +769,9 @@ class SoundManager {
 
     effectSound(key, volume = 0.8) {
 
+        if (!__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED) return;
         console.log("effectSound");
         this.effectSoundStop(__WEBPACK_IMPORTED_MODULE_1__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
-        if (!__WEBPACK_IMPORTED_MODULE_0__data_GameConfig__["a" /* default */].SOUND_ENABLED) return;
         // if(this._queue[key] === undefined) return;
         if (this._queue[key]) {
 
@@ -2137,11 +2137,13 @@ class Boot extends Phaser.State {
         this.game.load.image(__WEBPACK_IMPORTED_MODULE_0__const_ResourceKey__["a" /* default */].BOOT_LOADING_BACK, './asset/game/image/preLoadingBg.png');
         this.game.focusLoss = () => {
             // SoundManager.instance.bgmPause(SoundAssetKey.MAIN_BGM);
+            __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = false;
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0);
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].CURRENT_GUIDE_SOUND, 0, false);
             console.log('focusLoss');
         };
         this.game.focusGain = () => {
+            __WEBPACK_IMPORTED_MODULE_3__data_GameConfig__["a" /* default */].SOUND_ENABLED = true;
             __WEBPACK_IMPORTED_MODULE_1__manager_SoundManager__["a" /* default */].instance.effectSoundStop(__WEBPACK_IMPORTED_MODULE_2__data_SoundAssetKey__["a" /* default */].MAIN_BGM, 0.8, true);
             console.log('focusGain');
         };
